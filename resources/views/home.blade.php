@@ -47,25 +47,20 @@
                             <th style="width:10%" >ID</th>
                             <th style="width:20%" >Title</th>
                             <th style="width:20%" >Author</th>
-                            <th style="width:20%" >Published Date</th>
+                            <th style="width:20%" >Published Date (YYYY-MM-DD)</th>
                             <th style="width:30%" >Actions</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>123</td>
-                            <td>Book1</td>
-                            <td>Author1</td>
-                            <td>Date</td>
-                            <td><a href="#" class="btn btn-default btn-sm"><i class="fas fa-eye"></i> View</a> <a href="#" class="btn btn-default btn-sm"><i class="fas fa-edit"></i> Edit</a> <a href="#" class="btn btn-default btn-sm"><i class="fas fa-trash-alt"></i> Delete</a></td>
-                          </tr>
-                          <tr>
-                            <td>123</td>
-                            <td>Book1</td>
-                            <td>Author1</td>
-                            <td>Date</td>
-                            <td><a href="#" class="btn btn-default btn-sm"><i class="fas fa-eye"></i> View</a> <a href="#" class="btn btn-default btn-sm"><i class="fas fa-edit"></i> Edit</a> <a href="#" class="btn btn-default btn-sm"><i class="fas fa-trash-alt"></i> Delete</a></td>
-                          </tr>
+                            @foreach($books  as $book)
+                                  <tr>
+                                    <td>{{ $book->id }}</td>
+                                    <td>{{ $book->title }}</td>
+                                    <td>{{ $book->author }}</td>
+                                    <td>{{ $book->date_published }}</td>
+                                    <td><a href="#" class="btn btn-default btn-sm"><i class="fas fa-eye"></i> View</a> <a href="#" class="btn btn-default btn-sm"><i class="fas fa-edit"></i> Edit</a> <a href="#" class="btn btn-default btn-sm"><i class="fas fa-trash-alt"></i> Delete</a></td>
+                                  </tr>
+                            @endforeach
                         </tbody>
                     </table>
 

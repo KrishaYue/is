@@ -50,7 +50,7 @@ class BookController extends Controller
 
         $book->save();
 
-        return redirect()->route('book.create');
+        return redirect()->route('home');
         
 
     }

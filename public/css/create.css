@@ -5,3 +5,7 @@
 .btn-float-right {
 	margin-left: 658px;
 }
+
+.err-msg {
+	color: red;
+}
