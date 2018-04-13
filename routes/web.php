@@ -21,6 +21,7 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
     
 	Auth::routes();
 
-	Route::get('/home', 'HomeController@index')->name('home');;
+	Route::get('/home', 'HomeController@index')->name('home');
 	Route::resource('/book', 'BookController');
+	Route::post('/book/page', 'BookController@paginatebooks')->name('paginate.books');
 });

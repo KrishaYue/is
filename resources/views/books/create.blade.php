@@ -47,8 +47,17 @@
                                     </span>
                           @endif
                         </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-sm-2" for="availability">Available:</label>
+                        <div class="col-sm-8">
+                        <div class="checkbox">                        
+                          <input type="checkbox" name="available">
+                        </div>
+                      </div>  
                       </div>                 
                     </form>
+
                     <!-- Split button -->
                       <div class="btn-group btn-float-right">
                         <button type="submit" class="btn btn-primary" form="create_form">Submit</button>

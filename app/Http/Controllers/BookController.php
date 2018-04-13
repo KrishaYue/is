@@ -15,7 +15,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -47,7 +47,7 @@ class BookController extends Controller
         $book->title = $request->title;
         $book->author = $request->author;
         $book->date_published = $request->date_published;
-
+        $book->availability = $request->has('available');
         $book->save();
 
         return redirect()->route('home');
@@ -98,5 +98,13 @@ class BookController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function paginatebooks(Request $request)
+    {
+        $allBooks = Book::all();
+        $books = Book::paginate($request->paginate);
+        $bookNum = $request->paginate;
+        return view('books.index')->withBooks($books)->with('bookNum', $bookNum)->with('allBooks', $allBooks);
     }
 }

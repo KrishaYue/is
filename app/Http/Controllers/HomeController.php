@@ -22,9 +22,11 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $books = Book::all();
-        return view('home')->with('books', $books);
+        $allBooks = Book::all();
+        $books = Book::paginate($request->paginate);
+        $bookNum = $request->paginate;
+        return view('home')->withBooks($books)->with('bookNum', $bookNum)->with('allBooks', $allBooks);
     }
 }
