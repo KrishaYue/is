@@ -10,6 +10,7 @@
 
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
+
             <h1>Books <small class="muted">Add book in the database</small></h1>
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -40,21 +41,23 @@
                       <div class="form-group">
                         <label class="control-label col-sm-2" for="date">Date:</label>
                         <div class="col-sm-8">
-                          <input type="date" class="form-control" id="date" name="date_published" value="{{ old('date_published') }}" required data-parsley-required-message="Date published is required" >
-                          @if ($errors->has('date_published'))
-                                    <span class="help-block">
-                                        <strong class="err-msg">{{ $errors->first('date_published') }}</strong>
-                                    </span>
-                          @endif
+                          
+                            <input type="date" class="form-control" id="date" name="date_published" value="{{ old('date_published') }}" required data-parsley-required-message="Date published is required" >
+                            @if ($errors->has('date_published'))
+                                      <span class="help-block">
+                                          <strong class="err-msg">{{ $errors->first('date_published') }}</strong>
+                                      </span>
+                            @endif
+                          
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-sm-2" for="availability">Available:</label>
-                        <div class="col-sm-8">
-                        <div class="checkbox">                        
-                          <input type="checkbox" name="available">
-                        </div>
-                      </div>  
+
+                          <div class="checkbox" id="available" >                        
+                            <input type="checkbox" name="available" id="availability">Yes
+                          </div>
+ 
                       </div>                 
                     </form>
 
@@ -66,7 +69,6 @@
                           <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <ul class="dropdown-menu">
-                          <li><a href="#">Submit and View</a></li>
                           <li><a href="#">Submit and Create again</a></li>
                         </ul>
                       </div>

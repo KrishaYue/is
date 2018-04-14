@@ -50,7 +50,9 @@
                             </ul>          
                         </div>   
                     </div>
-                    
+                    @if(isset($quary_msg))
+                            <h1 class="text-danger">'{{ $quary_msg }}'<small> was not found.</small></h1>
+                    @else
                     <table class="table table-bordered table-striped">
                         <thead>
                           <tr>
@@ -107,9 +109,15 @@
                     <!-- links for button page -->
                     <ul class="pagination">
                         @for ($i = $allBooks->count(); $i > 0; $i-=$items)                           
-                                <li value="{{ $page }}"><a class="btn-xs"  href="{{ url('/home?page='.$page.'&items='.$items) }}">{{ $page++ }}</a></li>
+                                <li value="{{ $page }}"><a class="btn-xs"  href="{{ url('/home/search?quary='.$searchValue.'&page='.$page.'&items='.$items) }}">{{ $page++ }}</a></li>
+
                         @endfor
-                    </ul>                    
+                    </ul>
+                    @endif
+
+                    
+                         
+                    
 
                 </div>
             </div>

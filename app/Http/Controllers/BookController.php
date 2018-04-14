@@ -50,6 +50,7 @@ class BookController extends Controller
         $book->availability = $request->has('available');
         $book->save();
 
+        Session::flash('success', 'Book successfully added.');
         return redirect()->route('home');
         
 
@@ -102,9 +103,13 @@ class BookController extends Controller
 
     public function paginatebooks(Request $request)
     {
-        $allBooks = Book::all();
-        $books = Book::paginate($request->paginate);
-        $bookNum = $request->paginate;
-        return view('books.index')->withBooks($books)->with('bookNum', $bookNum)->with('allBooks', $allBooks);
+        //$items = 10;
+        //$books = Book::paginate($items);
+        //return view('books.index')
+            //  ->with('books', $books);
+        //$allBooks = Book::all();
+        //$books = Book::paginate(2);
+        //$bookNum = $request->paginate;
+        //return view('books.index')->withBooks($books)->with('allBooks', $allBooks);
     }
 }

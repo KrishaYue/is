@@ -24,9 +24,51 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        /*
         $allBooks = Book::all();
-        $books = Book::paginate($request->paginate);
-        $bookNum = $request->paginate;
-        return view('home')->withBooks($books)->with('bookNum', $bookNum)->with('allBooks', $allBooks);
+        $books = Book::paginate(1);
+        return view('home')->withBooks($books)->with('allBooks', $allBooks);
+        http://localhost:8000/home?page=2
+        */
+        $page = 1;
+        $allBooks = Book::all();
+        $items = $request->items ?? 10;
+        $books = Book::paginate($items);
+        //$books->withPath('custom/url');
+        return view('home')
+              ->with('books', $books)
+              ->with('items', $items)
+              ->with('allBooks', $allBooks)
+              ->with('page', $page);
+    }
+
+    public function searchBook(Request $request)
+    {
+        $page = 1;
+        $allBooks = Book::where( 'id', 'LIKE', '%' . $request->quary . '%' )->orWhere( 'title', 'LIKE', '%' . $request->quary . '%' );
+        //$allBooks = Book::all();
+        $items = $request->items ?? 10;
+        $books = Book::where( 'id', 'LIKE', '%' . $request->quary . '%' )->orWhere( 'title', 'LIKE', '%' . $request->quary . '%' )->paginate($items);
+        $searchValue = $request->quary;
+        //$books = Book::paginate($items);
+        //$books->withPath('custom/url');
+        if ($allBooks->count() > 0) {
+            return view('books.search')
+              ->with('books', $books)
+              ->with('items', $items)
+              ->with('allBooks', $allBooks)
+              ->with('page', $page)
+              ->with('searchValue', $searchValue);
+        }
+        else {
+            return view('books.search')
+              ->with('quary_msg', $searchValue)
+              ->with('books', $books)
+              ->with('items', $items)
+              ->with('allBooks', $allBooks)
+              ->with('page', $page)
+              ->with('searchValue', $searchValue);
+        }
+        
     }
 }
