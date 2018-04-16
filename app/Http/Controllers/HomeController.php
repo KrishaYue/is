@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace ICTDUInventory\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Book;
+use ICTDUInventory\Book;
 
 class HomeController extends Controller
 {
@@ -30,6 +30,7 @@ class HomeController extends Controller
         return view('home')->withBooks($books)->with('allBooks', $allBooks);
         http://localhost:8000/home?page=2
         */
+        $isActive = $request->get('page', 1);
         $page = 1;
         $allBooks = Book::all();
         $items = $request->items ?? 10;
@@ -39,11 +40,13 @@ class HomeController extends Controller
               ->with('books', $books)
               ->with('items', $items)
               ->with('allBooks', $allBooks)
-              ->with('page', $page);
+              ->with('page', $page)
+              ->with('isActive', $isActive);
     }
 
     public function searchBook(Request $request)
     {
+        $isActive = $request->get('page', 1);
         $page = 1;
         $allBooks = Book::where( 'id', 'LIKE', '%' . $request->quary . '%' )->orWhere( 'title', 'LIKE', '%' . $request->quary . '%' );
         //$allBooks = Book::all();
@@ -58,7 +61,8 @@ class HomeController extends Controller
               ->with('items', $items)
               ->with('allBooks', $allBooks)
               ->with('page', $page)
-              ->with('searchValue', $searchValue);
+              ->with('searchValue', $searchValue)
+              ->with('isActive', $isActive);
         }
         else {
             return view('books.search')
@@ -67,7 +71,8 @@ class HomeController extends Controller
               ->with('items', $items)
               ->with('allBooks', $allBooks)
               ->with('page', $page)
-              ->with('searchValue', $searchValue);
+              ->with('searchValue', $searchValue)
+              ->with('isActive', $isActive);
         }
         
     }

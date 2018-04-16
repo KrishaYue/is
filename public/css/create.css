@@ -13,3 +13,23 @@
 #available {
 	margin-left: 195px;
 }
+
+.btn-link{
+  border:none;
+  outline:none;
+  background:none;
+  cursor:pointer;
+  color:#636b6f;
+  margin-left: 1px;
+  padding:0;
+  padding-left: 9px;
+  padding-right: 9px;
+  font-family:inherit;
+  font-size:inherit;
+}
+
+.btn-link:hover{
+  text-decoration: none;
+  background-color:#e6e7e8;
+  color: black;
+}

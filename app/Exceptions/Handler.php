@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions;
+namespace ICTDUInventory\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;

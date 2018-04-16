@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace ICTDUInventory\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Book;
+use ICTDUInventory\Book;
 use Session;
 
 class BookController extends Controller
@@ -13,6 +13,11 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         
@@ -75,7 +80,9 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        //
+        $book = Book::find($id);
+        return view('books.edit')
+                ->with('book', $book);
     }
 
     /**
@@ -87,7 +94,22 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title'                   =>               'required',
+            'author'                  =>               'required',
+            'date_published'          =>               'required|date|before:tomorrow'       
+        ]);
+
+        $book = Book::find($id);
+
+        $book->title = $request->title;
+        $book->author = $request->author;
+        $book->date_published = $request->date_published;
+        $book->availability = $request->has('available');
+        $book->save();
+
+        Session::flash('success', 'Book successfully changed.');
+        return redirect()->route('home');
     }
 
     /**
@@ -98,18 +120,50 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $book = Book::find($id);
+        $book->delete();
+
+        Session::flash('success', 'Book has been deleted.');
+        return redirect()->route('home');
     }
 
-    public function paginatebooks(Request $request)
+    public function storeAndNew(Request $request) 
     {
-        //$items = 10;
-        //$books = Book::paginate($items);
-        //return view('books.index')
-            //  ->with('books', $books);
-        //$allBooks = Book::all();
-        //$books = Book::paginate(2);
-        //$bookNum = $request->paginate;
-        //return view('books.index')->withBooks($books)->with('allBooks', $allBooks);
+        $this->validate($request, [
+            'title'                   =>               'required',
+            'author'                  =>               'required',
+            'date_published'          =>               'required|date|before:tomorrow'
+        ]);
+
+        $book = New Book;
+
+        $book->title = $request->title;
+        $book->author = $request->author;
+        $book->date_published = $request->date_published;
+        $book->availability = $request->has('available');
+        $book->save();
+
+        Session::flash('success', 'Book successfully added.');
+        return redirect()->route('book.create');
+    }
+
+    public function updateAndView(Request $request, $id)
+    {
+        $this->validate($request, [
+            'title'                   =>               'required',
+            'author'                  =>               'required',
+            'date_published'          =>               'required|date|before:tomorrow'       
+        ]);
+
+        $book = Book::find($id);
+
+        $book->title = $request->title;
+        $book->author = $request->author;
+        $book->date_published = $request->date_published;
+        $book->availability = $request->has('available');
+        $book->save();
+
+        Session::flash('success', 'Book successfully changed.');
+        return redirect()->route('book.edit', $book->id);
     }
 }

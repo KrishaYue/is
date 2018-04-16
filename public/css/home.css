@@ -6,3 +6,11 @@
 .btn-m-left {
 	margin-left: 10px;
 }
+
+table tr td {
+	text-transform: capitalize;
+}
+
+.form_inline {
+	display: inline;
+}

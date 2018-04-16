@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace ICTDUInventory\Http\Middleware;
 
 use Closure;
 

@@ -24,5 +24,12 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/home/search', 'HomeController@searchBook')->name('search.book');
 	Route::resource('/book', 'BookController');
-	//Route::get('/books', 'BookController@paginatebooks')->name('paginate.books');
+	Route::post('/book/add', 'BookController@storeAndNew')->name('book.store.new');
+	Route::match(['PUT', 'PATCH'], '/book/update/{id}', 'BookController@updateAndView')->name('book.update.view');
+
+	Route::get('user/settings', 'UserController@viewUser')->name('view.user');
+	Route::post('user/settings/updatepicture', 'UserController@updatePicture')->name('update.picture');
+	Route::post('user/settings/updateinfo', 'UserController@updateInfo')->name('update.info');
+	Route::match(['PUT', 'PATCH'], 'user/settings/{id}', 'UserController@updatePassword')->name('update.password');
+
 });

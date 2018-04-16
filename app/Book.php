@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace ICTDUInventory;
 
 use Illuminate\Database\Eloquent\Model;
 
