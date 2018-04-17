@@ -12,8 +12,8 @@
     <div class="col-md-8">
 
       <h1>{{ $book->title }}</h1>
-      <p class="lead">{{ $book->author }}</p>
-      <p class="lead">{{ $book->date_published }}</p>
+      <p class="lead">Author: {{ $book->author }}</p>
+      <p class="lead">Date Published: {{ $book->date_published }}</p>
     </div>
 
     <div class="col-md-4">
