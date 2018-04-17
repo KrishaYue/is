@@ -82,8 +82,10 @@
                                         <a href="#" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal{{$book->id}}" title="Click me to view the QR"><i class="fas fa-qrcode"></i></a>
                                     </td>
                                     <td>
-                                        <a href="{{ route('book.edit', $book->id) }}" class="btn btn-default btn-sm"><i class="fas fa-edit"></i> Edit</a>
-                                         
+                                        <a href="{{ route('book.show', $book->id) }}" class="btn btn-default btn-sm"><i class="fas fa-eye"></i></a>
+
+                                        <a href="{{ route('book.edit', $book->id) }}" class="btn btn-default btn-sm"><i class="fas fa-edit"></i></a>
+                                                                                
                                         <form  class="form_inline" method="POST" action="{{ route('book.destroy', $book->id) }}">
                                         <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Delete</button>
                                         <input type="hidden" name="_token" value="{{ Session::token() }}">
