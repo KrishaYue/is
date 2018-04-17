@@ -55,7 +55,7 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="{{ Request::is('login') ? 'active' : '' }}"><a href="{{ route('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
-                            <li class="{{ Request::is('register') ? 'active' : '' }}"><a href="{{ route('register') }}">Register</a></li>
+                            
                         @else
                             <li>
                                 @if(Auth::user()->image == '')

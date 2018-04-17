@@ -20,14 +20,12 @@
             <h1>Books <small class="muted">Add book in the database</small></h1>
             <div class="panel panel-default">
                 <div class="panel-body">
-                  <div class="col-md-2">
-                    
-                  </div>
+
                     <form class="form-horizontal" method="POST" id="create_form" data-parsley-validate="parsley" enctype="multipart/form-data">
                        {{ csrf_field() }}
-                     
+                
                       <div class="form-group">
-                       <input type="file" name="bookpic" class="form-group col-sm-8">
+                       
                         <label class="control-label col-sm-2" for="title">Title:</label>
                         <div class="col-sm-8">
                           <input type="text" class="form-control" id="title" placeholder="Enter title" name="title" value="{{ old('title') }}" required data-parsley-maxlength="255" data-parsley-required-message="Title is required">
@@ -38,6 +36,7 @@
                           @endif
                         </div>
                       </div>
+                      
                       <div class="form-group">
                         <label class="control-label col-sm-2" for="author">Author:</label>
                         <div class="col-sm-8">
@@ -62,6 +61,7 @@
                           
                         </div>
                       </div>
+
                       <div class="form-group">
                         <label class="control-label col-sm-2" for="availability">Available:</label>
 
@@ -69,7 +69,19 @@
                             <input type="checkbox" name="available" id="availability">Yes
                           </div>
  
-                      </div>                 
+                      </div> 
+                      <div class="form-group">
+                       
+                        <label class="control-label col-sm-2" for="title">Book Picture:</label>
+                        <div class="col-sm-8">
+                          <input type="file" name="bookpic" class="form-group col-sm-8">
+                        </div>
+                      </div>
+                      @if ($errors->has('bookpic'))
+                                    <span class="col-md-offset-2">
+                                        <strong class="err-msg">{{ $errors->first('bookpic') }}</strong>
+                                    </span>
+                      @endif                
                     </form>
 
                     <!-- Split button -->

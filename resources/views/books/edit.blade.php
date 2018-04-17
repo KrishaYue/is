@@ -20,14 +20,10 @@
             <h1>Books <small class="muted">Edit book in the database</small></h1>
             <div class="panel panel-default">
                 <div class="panel-body">
-                  @if($book->image == '')
-                      <img src=" {{ asset('default-profile.png') }} " width="100" height="100">
-                    @else
-                  <img src=" {{ asset('images/' . $book->image) }} " width="100" height="100">
-                    @endif
+                  
                     <form class="form-horizontal" method="POST" id="create_form" data-parsley-validate="parsley" enctype="multipart/form-data">
-                      <div class="form-group">
-                        <input type="file" name="bookpic" class="form-group col-sm-8">
+
+                      <div class="form-group">                       
                         <label class="control-label col-sm-2" for="title">Title:</label>
                         <div class="col-sm-8">
                           <input type="text" class="form-control" id="title" placeholder="Enter title" name="title" value="{{ $book->title }}" required data-parsley-maxlength="255" data-parsley-required-message="Title is required">
@@ -70,6 +66,52 @@
                           </div>
  
                       </div>
+                      <div class="form-group">
+                        <label class="control-label col-sm-2" for="bookpic">Book Picture:</label>
+                        <div class="col-sm-8">
+                          <input type="file" name="bookpic" class="form-group col-sm-8">
+                        </div>
+                      </div>
+                      @if ($errors->has('bookpic'))
+                                    <span class="col-md-offset-2">
+                                        <strong class="err-msg">{{ $errors->first('bookpic') }}</strong>
+                                    </span>
+                      @endif
+                      
+                      <div class="form-group">
+                        <label class="control-label col-sm-2" for="bookpic"></label>
+                        <div class="col-sm-8">
+                          @if($book->image == '')
+                              <img src=" {{ asset('default-book.jpg') }} " width="200" height="200">
+                          @else
+                              <img class="zoom" src=" {{ asset('images/' . $book->image) }} " width="200" height="200" data-toggle="modal" data-target="#myModal">
+                          @endif
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="text-light">&times;</span></button>
+                                      </div>
+                                      <div class="modal-body" >
+                                        <div class="row">
+                                            <div class="col-md-offset-1">
+                                                @if($book->image == '')
+                                                    <img src=" {{ asset('default-book.jpg') }} " width="600" height="600">
+                                                @else
+                                                    <img src=" {{ asset('images/' . $book->image) }} " width="600" height="600" >
+                                                @endif
+                                            </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div> 
+                        </div>
+                      </div>
+                      
+                        
 
                       <input type="hidden" name="_token" value="{{ Session::token() }}">
               		  {{ method_field('PUT') }}                 

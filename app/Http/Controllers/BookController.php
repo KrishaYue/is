@@ -47,7 +47,8 @@ class BookController extends Controller
         $this->validate($request, [
             'title'                   =>               'required',
             'author'                  =>               'required',
-            'date_published'          =>               'required|date|before:tomorrow'
+            'date_published'          =>               'required|date|before:tomorrow',
+            'bookpic'                 =>               'sometimes|image'
         ]);
 
         $book = New Book;
@@ -64,10 +65,8 @@ class BookController extends Controller
                 $oldImage = $book->image; //old imagename
 
                 $book->image = $filename; 
-
-                Storage::delete($oldImage); //delete old image
              
-            }
+        }
 
         $book->save();
 
@@ -83,11 +82,6 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        $book = Book::find($id);
-        return view('books.show')->withBook($book);
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -114,7 +108,8 @@ class BookController extends Controller
         $this->validate($request, [
             'title'                   =>               'required',
             'author'                  =>               'required',
-            'date_published'          =>               'required|date|before:tomorrow'       
+            'date_published'          =>               'required|date|before:tomorrow',
+            'bookpic'                 =>               'sometimes|image'       
         ]);
 
         $book = Book::find($id);
@@ -134,7 +129,7 @@ class BookController extends Controller
 
                 Storage::delete($oldImage); //delete old image
              
-            }
+        }
         $book->save();
 
         Session::flash('success', 'Book successfully changed.');
@@ -161,7 +156,8 @@ class BookController extends Controller
         $this->validate($request, [
             'title'                   =>               'required',
             'author'                  =>               'required',
-            'date_published'          =>               'required|date|before:tomorrow'
+            'date_published'          =>               'required|date|before:tomorrow',
+            'bookpic'                 =>               'sometimes|image'
         ]);
 
         $book = New Book;
@@ -170,6 +166,19 @@ class BookController extends Controller
         $book->author = $request->author;
         $book->date_published = $request->date_published;
         $book->availability = $request->has('available');
+
+
+        if($request->hasFile('bookpic')){
+                $image = $request->file('bookpic');
+                $filename = time() . '.' . $image->getClientOriginalExtension();
+                $location = public_path('images/' . $filename);
+                Image::make($image)->save($location);
+                $oldImage = $book->image; //old imagename
+
+                $book->image = $filename; 
+             
+            }
+
         $book->save();
 
         Session::flash('success', 'Book successfully added.');
@@ -181,7 +190,8 @@ class BookController extends Controller
         $this->validate($request, [
             'title'                   =>               'required',
             'author'                  =>               'required',
-            'date_published'          =>               'required|date|before:tomorrow'       
+            'date_published'          =>               'required|date|before:tomorrow',
+            'bookpic'                 =>               'sometimes|image'       
         ]);
 
         $book = Book::find($id);
@@ -190,6 +200,18 @@ class BookController extends Controller
         $book->author = $request->author;
         $book->date_published = $request->date_published;
         $book->availability = $request->has('available');
+        if($request->hasFile('bookpic')){
+                $image = $request->file('bookpic');
+                $filename = $id . '.' . time() . '.' . $image->getClientOriginalExtension();
+                $location = public_path('images/' . $filename);
+                Image::make($image)->save($location);
+                $oldImage = $book->image; //old imagename
+
+                $book->image = $filename; 
+
+                Storage::delete($oldImage); //delete old image
+             
+        }
         $book->save();
 
         Session::flash('success', 'Book successfully changed.');
