@@ -4,6 +4,7 @@
 
      <link href="{{ asset('css/home.css') }}" rel="stylesheet">
      
+     
 @endsection
 
 @section('content')
@@ -69,7 +70,7 @@
                                   <tr>
                                     
                                     <td>{{ $book->id }}</td>
-                                    <td>{{ $book->title }} @if(date('M j, Y') == $book->created_at->toFormattedDateString()) <span class="label label-danger">New</span> @endif</td>
+                                    <td>{{ $book->title }} @if(date('M j, Y') == $book->created_at->toFormattedDateString()) <span class="label label-danger blink_me">New</span> @endif</td>
                                     <td>{{ $book->author }}</td>
                                     <td>{{ date('M j, Y', strtotime($book->date_published)) }}</td>
                                     <td>@if($book->availability == 1)
@@ -127,12 +128,16 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <!-- links for button page -->
-                    <ul class="pagination">
-                        @for ($i = $allBooks->count(); $i > 0; $i-=$items)                           
-                                <li class="@if($isActive == $page) active @endif" value="{{ $page }}"><a class="btn-xs"  href="{{ url('/home?page='.$page.'&items='.$items) }}">{{ $page++ }}</a></li>
+                    
+                    <ul class="pagination pagination-sm">
+                        @for ($i = $allBooks->count(); $i > 0; $i-=$items)
+                            <li class=" 
+                                       @if($isActive == $page) active @endif"  
+                                       value="{{ $page }}" ><a href="{{ url('/home?page='.$page.'&items='.$items) }}">{{ $page++ }}</a></li>
                         @endfor
-                    </ul>                    
+                    </ul>
+
+                                      
 
                 </div>
             </div>
@@ -152,11 +157,17 @@
             var printcontent = document.getElementById(el).innerHTML;
             document.body.innerHTML = printcontent;
             window.print();
-        }        
+        }   
+
+        function blinker() {
+            $('.blink_me').fadeOut(500);
+            $('.blink_me').fadeIn(500);
+        }
+
+        setInterval(blinker, 1000);     
 </script>
 
 
 
 @endsection
-
 

@@ -20,7 +20,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <a href="{{ route('book.create') }}" class="btn btn-success btn-sm"><i class="fas fa-plus"></i> Add Book</a>
-                    <a href="#" class="btn btn-default btn-sm btn-print"><i class="fas fa-print"></i> Print All Records</a>
+                    <a href="{{ route('books.print') }}" class="btn btn-default btn-sm btn-print"><i class="fas fa-print"></i> Print All Records</a>
                 </div>
 
                 <div class="panel-body">
@@ -70,7 +70,7 @@
                             @foreach($books  as $book)
                                   <tr>
                                     <td>{{ $book->id }}</td>
-                                    <td>{{ $book->title }}</td>
+                                    <td>{{ $book->title }} @if(date('M j, Y') == $book->created_at->toFormattedDateString()) <span class="label label-danger blink_me">New</span> @endif</td>
                                     <td>{{ $book->author }}</td>
                                     <td>{{ date('M j, Y', strtotime($book->date_published)) }}</td>
                                     <td>@if($book->availability == 1)
@@ -128,7 +128,7 @@
                         </tbody>
                     </table>
                     <!-- links for button page -->
-                    <ul class="pagination">
+                    <ul class="pagination pagination-sm">
                         @for ($i = $allBooks->count(); $i > 0; $i-=$items)                           
                                 <li class="@if($isActive == $page) active @endif" value="{{ $page }}"><a class="btn-xs"  href="{{ url('/home/search?quary='.$searchValue.'&page='.$page.'&items='.$items) }}">{{ $page++ }}</a></li>
 
@@ -157,7 +157,14 @@
             var printcontent = document.getElementById(el).innerHTML;
             document.body.innerHTML = printcontent;
             window.print();
-        }        
+        } 
+        
+        function blinker() {
+            $('.blink_me').fadeOut(500);
+            $('.blink_me').fadeIn(500);
+        }
+
+        setInterval(blinker, 1000);        
 </script>
 
 
