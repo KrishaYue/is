@@ -20,8 +20,14 @@
             <h1>Books <small class="muted">Edit book in the database</small></h1>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" id="create_form" data-parsley-validate="parsley" >
+                  @if($book->image == '')
+                      <img src=" {{ asset('default-profile.png') }} " width="100" height="100">
+                    @else
+                  <img src=" {{ asset('images/' . $book->image) }} " width="100" height="100">
+                    @endif
+                    <form class="form-horizontal" method="POST" id="create_form" data-parsley-validate="parsley" enctype="multipart/form-data">
                       <div class="form-group">
+                        <input type="file" name="bookpic" class="form-group col-sm-8">
                         <label class="control-label col-sm-2" for="title">Title:</label>
                         <div class="col-sm-8">
                           <input type="text" class="form-control" id="title" placeholder="Enter title" name="title" value="{{ $book->title }}" required data-parsley-maxlength="255" data-parsley-required-message="Title is required">
