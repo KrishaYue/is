@@ -1,37 +1,133 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@section('styles')
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-     <link href="{{ asset('css/print.css') }}" rel="stylesheet">
-     
-@endsection
+    <title>ICTDU Inventory</title>
 
-@section('content')
+    <link rel="shortcut icon" href="{{ asset('sample.ico') }}" />
+    
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/print.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/bookloading.css') }}">
 
+    <!-- Font Awesome icon -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+    
+</head>
+<body onload="myFunction()" style="background-color: #222222;
+  width: 100%;
+  height: 100vh;
+  margin: 0;">
 
-<div class="container" id="loading_content">
-	<div class="row print_loading">
-		<div class="col-md-8 col-md-offset-2">
-			<h3 class="text-muted text-center">Please wait...</h3>
-			<div class="progress" width="20">
-			  <div class="progress-bar progress-bar-success progress-bar-striped active"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-			    <h4 class="modal-title" id="myModalLabel"><p id="demo"></p>%</h4>
-			  </div>
+<div class="bookshelf_wrapper" id="loader">
+  <ul class="books_list" id="loader_ul">
+    <li class="book_item first" id="loader_li1"></li>
+    <li class="book_item second" id="loader_li2"></li>
+    <li class="book_item third" id="loader_li3" ></li>
+    <li class="book_item fourth" id="loader_li4"></li>
+    <li class="book_item fifth" id="loader_li5"></li>
+    <li class="book_item sixth" id="loader_li6"></li>
+  </ul>
+  <div class="shelf" id="loader_shelf"></div>
+</div>
+
+<div id="app">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+
+                    <!-- Collapsed Hamburger -->
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse" aria-expanded="false">
+                        <span class="sr-only">Toggle Navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                    <!-- Branding Image -->
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        ICTDU Inventory
+                    </a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="nav navbar-nav">
+                        @guest
+
+                        @else
+                            <li class=""><a href="{{ route('home') }}">Home</a></li>
+                        @endguest
+                    </ul>
+
+                    <!-- Right Side Of Navbar -->
+                    <ul class="nav navbar-nav navbar-right">
+                        <!-- Authentication Links -->
+                        @guest
+                            <li class=""><a href="{{ route('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                            
+                        @else
+                            <li>
+                                @if(Auth::user()->image == '')
+                                    <img src="{{ asset('default-profile.png') }} " width="28;" height="28" style="border-radius: 50%; margin-top: 10px;">
+                                @else
+                                    <img src="{{ asset('images/' . Auth::user()->image) }} " width="28;" height="28" style="border-radius: 50%; margin-top: 10px;">
+                                @endif
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ route('view.user') }}"><i class="fas fa-user-circle"></i> Profile</a></li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i>
+                                             Logout
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endguest
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- spacer -->
+        <div style="margin-bottom: 100px;">
+            
+        </div>
+        
+		<div class="container animate-bottom" style="display:none;" id="myDiv" >
+			<div class="row">
+				<div class="col-md-10 col-md-offset-1">
+					<div class="border-left">
+						<ul class="list-inline">
+							<li><h3>Your files are now ready.</h3><p class="text-success small">Thank you for waiting!</p></li>
+							<li><button style="position: absolute; right: 35px; top: 35px;" class="btn btn-success btn-sm" onclick="printContent('qr')"><i class="fas fa-print"></i> Print</button></li>
+						</ul>			
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-</div>
 
 
-<div class="container" id="print_content" style="display: none;">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-				<div class="alert alert-success">
-				  <strong>Success!</strong> your files are now ready.<button class="btn btn-primary print-btn" onclick="printContent('qr')"><i class="fas fa-print"></i> Print</button>
-				</div>		
-        </div>
+
     </div>
-</div>
 
 
 
@@ -57,27 +153,34 @@
             window.print();
         } 
 
-        var myVar=setInterval(function(){myTimer()},1);
-		var count = 0;
-		function myTimer() {
-		if(count < 100){
-		  $('.progress').css('width', count + "%");
-		  count += 0.15;
-		   document.getElementById("demo").innerHTML = Math.round(count) +"%";
-		   // code to do when loading
-		  }
-		  
-		  else if(count > 99){  
-		      // code to do after loading
-		      document.getElementById('print_content').style.display = 'block';
-		      document.getElementById('loading_content').style.display = 'none';
-		      document.body.style.backgroundColor = '#f5f8fa';
-			
-		  
-		  }
-		}  
-             
+        
+        var myVar;
+
+		function myFunction() {
+		    myVar = setTimeout(showPage, 3000);
+		}
+
+		function showPage() {
+
+		  document.getElementById('loader').removeAttribute("class"); 
+		  document.getElementById('loader_ul').removeAttribute("class");
+
+		  document.getElementById('loader_li1').removeAttribute("class");
+		  document.getElementById('loader_li2').removeAttribute("class");
+		  document.getElementById('loader_li3').removeAttribute("class");
+		  document.getElementById('loader_li4').removeAttribute("class");
+		  document.getElementById('loader_li5').removeAttribute("class"); 
+		  document.getElementById('loader_li6').removeAttribute("class");
+
+		  document.getElementById('loader_shelf').removeAttribute("class");
+
+		  document.body.removeAttribute('style');
+
+		  document.getElementById("loader").style.display = "none";
+		  document.getElementById("myDiv").style.display = "block";
+
+		}   
 </script>
 
-@endsection
+
 
