@@ -165,7 +165,7 @@ class BookController extends Controller
         $book->save();
 
         Session::flash('success', 'Book successfully changed.');
-        return redirect()->route('book.edit', $book->id);
+        return redirect()->route('book.show', $book->id);
     }
 
     public function printBooks() {

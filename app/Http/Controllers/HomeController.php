@@ -34,7 +34,8 @@ class HomeController extends Controller
         $page = 1;
         $allBooks = Book::all();
         $items = $request->items ?? 10;
-        $books = Book::paginate($items);
+        $books = Book::orderBy('id', 'desc')->paginate($items);
+        //$books = Book::paginate($items);
         //$books->withPath('custom/url');
         return view('home')
               ->with('books', $books)
@@ -51,7 +52,7 @@ class HomeController extends Controller
         $allBooks = Book::where( 'id', 'LIKE', '%' . $request->quary . '%' )->orWhere( 'title', 'LIKE', '%' . $request->quary . '%' );
         //$allBooks = Book::all();
         $items = $request->items ?? 10;
-        $books = Book::where( 'id', 'LIKE', '%' . $request->quary . '%' )->orWhere( 'title', 'LIKE', '%' . $request->quary . '%' )->paginate($items);
+        $books = Book::where( 'id', 'LIKE', '%' . $request->quary . '%' )->orWhere( 'title', 'LIKE', '%' . $request->quary . '%' )->orderBy('id', 'desc')->paginate($items);
         $searchValue = $request->quary;
         //$books = Book::paginate($items);
         //$books->withPath('custom/url');

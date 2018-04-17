@@ -58,12 +58,12 @@
                         <thead>
                           <tr>
                             <th style="width:10%" >ID</th>
-                            <th style="width:20%" >Title</th>
-                            <th style="width:20%" >Author</th>
-                            <th style="width:20%" >Published Date</th>
+                            <th style="width:30%" >Title</th>
+                            <th style="width:10%" >Author</th>
+                            <th style="width:10%" >Published Date</th>
                             <th>Available</th>
                             <th>QR Code</th>
-                            <th style="width:20%" >Actions</th>
+                            <th style="width:25%" >Actions</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -81,9 +81,9 @@
                                     </td>
                                     <td><a href="#" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal{{$book->id}}" title="Click me to view the QR"><i class="fas fa-qrcode"></i></a></td>
                                     <td>
-                                        <form class="form_inline">
-                                            <button class="btn btn-default btn-sm"><i class="fas fa-edit"></i> Edit</button>
-                                        </form>
+                                        <a href="{{ route('book.show', $book->id) }}" class="btn btn-default btn-sm"><i class="fas fa-eye"></i> View</a>
+
+                                        <a href="{{ route('book.edit', $book->id) }}" class="btn btn-default btn-sm"><i class="fas fa-edit"></i> Edit</a>
                                          
                                         <form  class="form_inline" method="POST" action="{{ route('book.destroy', $book->id) }}">
                                         <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Delete</button>
@@ -104,7 +104,7 @@
                                           <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-md-offset-2">
-                                                    <img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(400)->generate(url('home/book/').'/'.$book->id))}} ">
+                                                    <img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(400)->generate(url('book/').'/'.$book->id))}} ">
                                                 </div>
                                             </div>
                                           </div>
@@ -113,7 +113,7 @@
                                           <div class="qr_div" id="qr{{$book->id}}">
                                                 <ul class="list-inline">
                                                     <li><h1>ID #: {{ $book->id }}</h1></li>
-                                                    <li style="margin-left: 200px;"><img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(150)->generate(url('home/book/').'/'.$book->id))}} "></li>
+                                                    <li style="margin-left: 200px;"><img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(150)->generate(url('book/').'/'.$book->id))}} "></li>
                                                 </ul>
                                           </div>
 

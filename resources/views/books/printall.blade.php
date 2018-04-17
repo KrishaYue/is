@@ -41,7 +41,7 @@
 	<div class="qr_content">
     	<ul class="list-inline">
 	        <li style="margin-left: 100px;"><h1>ID #: {{ $book->id }}</h1></li>
-	        <li style="margin-left: 200px;"><img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(150)->generate(url('home/book/').'/'.$book->id))}} "></li>
+	        <li style="margin-left: 200px;"><img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(150)->generate(url('book/').'/'.$book->id))}} "></li>
     	</ul>	
     </div>
     

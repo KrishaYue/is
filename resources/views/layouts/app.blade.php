@@ -46,7 +46,7 @@
                         @guest
 
                         @else
-                            <li class="{{ Request::is('home') ? 'active' : '' }}"><a href="{{ route('home') }}">Home</a></li>
+                            <li class="{{ Request::is('home*') ? 'active' : '' }}"><a href="{{ route('home') }}">Home</a></li>
                         @endguest
                     </ul>
 

@@ -57,12 +57,12 @@
                         <thead>
                           <tr>
                             <th style="width:10%" >ID</th>
-                            <th style="width:20%" >Title</th>
-                            <th style="width:20%" >Author</th>
-                            <th style="width:20%" >Published Date</th>
+                            <th style="width:30%" >Title</th>
+                            <th style="width:10%" >Author</th>
+                            <th style="width:10%" >Published Date</th>
                             <th>Available</th>
                             <th>QR Code</th>
-                            <th style="width:17%" >Actions</th>
+                            <th style="width:25%" >Actions</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -70,7 +70,7 @@
                                   <tr>
                                     
                                     <td>{{ $book->id }}</td>
-                                    <td>{{ $book->title }} @if(date('M j, Y') == $book->created_at->toFormattedDateString()) <span class="label label-danger blink_me">New</span> @endif</td>
+                                    <td>{{ $book->title }} @if(date('M j, Y') == $book->created_at->toFormattedDateString()) <span class="label label-danger blink_me">New !</span></span> @endif</td>
                                     <td>{{ $book->author }}</td>
                                     <td>{{ date('M j, Y', strtotime($book->date_published)) }}</td>
                                     <td>@if($book->availability == 1)
@@ -83,9 +83,9 @@
                                         <a href="#" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal{{$book->id}}" title="Click me to view the QR"><i class="fas fa-qrcode"></i></a>
                                     </td>
                                     <td>
-                                        <a href="{{ route('book.show', $book->id) }}" class="btn btn-default btn-sm"><i class="fas fa-eye"></i></a>
+                                        <a href="{{ route('book.show', $book->id) }}" class="btn btn-default btn-sm"><i class="fas fa-eye"></i> View</a>
 
-                                        <a href="{{ route('book.edit', $book->id) }}" class="btn btn-default btn-sm"><i class="fas fa-edit"></i></a>
+                                        <a href="{{ route('book.edit', $book->id) }}" class="btn btn-default btn-sm"><i class="fas fa-edit"></i> Edit</a>
                                                                                 
                                         <form  class="form_inline" method="POST" action="{{ route('book.destroy', $book->id) }}">
                                         <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Delete</button>
@@ -116,7 +116,7 @@
                                           <div class="qr_div" id="qr{{$book->id}}">
                                                 <ul class="list-inline">
                                                     <li><h1>ID #: {{ $book->id }}</h1></li>
-                                                    <li style="margin-left: 200px;"><img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(150)->generate(url('home/book/').'/'.$book->id))}} "></li>
+                                                    <li style="margin-left: 200px;"><img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(150)->generate(url('book/').'/'.$book->id))}} "></li>
                                                 </ul>
                                           </div>
                                           
