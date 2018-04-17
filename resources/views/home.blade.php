@@ -105,7 +105,7 @@
                                           <div class="modal-body" >
                                             <div class="row">
                                                 <div class="col-md-offset-2">
-                                                    <img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(400)->generate(url('home/book/').'/'.$book->id))}} ">
+                                                    <img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(400)->generate(url('book/').'/'.$book->id))}} ">
                                                 </div>
                                             </div>
                                           </div>
