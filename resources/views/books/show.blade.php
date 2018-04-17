@@ -14,11 +14,6 @@
       <h1>{{ $book->title }}</h1>
       <p class="lead">Author: {{ $book->author }}</p>
       <p class="lead">Date Published: {{ date('M j, Y', strtotime($book->date_published)) }}</p>
-      <p class="lead">Available: @if($book->availability == 1)
-                                        {{ 'Yes' }}
-                                        @else
-                                        {{ 'No' }}
-                                        @endif</p>
     </div>
 
     <div class="col-md-4">
@@ -34,7 +29,13 @@
           <p>{{ date('M j, Y H:i', strtotime($book->updated_at)) }}</p>
         </dl>
         <hr>
-
+        <dl class="dl-horizontal">
+          <p class="lead">Available: @if($book->availability == 1)
+                                        {{ 'Yes' }}
+                                        @else
+                                        {{ 'No' }}
+                                        @endif</p>
+        </dl>
     </div>
   </div>
 </div>
