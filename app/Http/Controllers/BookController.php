@@ -5,6 +5,9 @@ namespace ICTDUInventory\Http\Controllers;
 use Illuminate\Http\Request;
 use ICTDUInventory\Book;
 use Session;
+use Image;
+use Storage;
+use Hash;
 
 class BookController extends Controller
 {
@@ -53,6 +56,19 @@ class BookController extends Controller
         $book->author = $request->author;
         $book->date_published = $request->date_published;
         $book->availability = $request->has('available');
+        if($request->hasFile('bookpic')){
+                $image = $request->file('bookpic');
+                $filename = time() . '.' . $image->getClientOriginalExtension();
+                $location = public_path('images/' . $filename);
+                Image::make($image)->save($location);
+                $oldImage = $book->image; //old imagename
+
+                $book->image = $filename; 
+
+                Storage::delete($oldImage); //delete old image
+             
+            }
+
         $book->save();
 
         Session::flash('success', 'Book successfully added.');
@@ -107,6 +123,18 @@ class BookController extends Controller
         $book->author = $request->author;
         $book->date_published = $request->date_published;
         $book->availability = $request->has('available');
+        if($request->hasFile('bookpic')){
+                $image = $request->file('bookpic');
+                $filename = $id . '.' . time() . '.' . $image->getClientOriginalExtension();
+                $location = public_path('images/' . $filename);
+                Image::make($image)->save($location);
+                $oldImage = $book->image; //old imagename
+
+                $book->image = $filename; 
+
+                Storage::delete($oldImage); //delete old image
+             
+            }
         $book->save();
 
         Session::flash('success', 'Book successfully changed.');

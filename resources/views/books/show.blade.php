@@ -7,10 +7,14 @@
             
 @section('content')
 <div class="container">
-
+ @if($book->image == '')
+                      <img src=" {{ asset('default-profile.png') }} " width="100" height="100">
+                    @else
+                  <img src=" {{ asset('images/' . $book->image) }} " width="100" height="100">
+                    @endif
    <div class="row">
     <div class="col-md-8">
-
+     
       <h1>{{ $book->title }}</h1>
       <p class="lead">Author: {{ $book->author }}</p>
       <p class="lead">Date Published: {{ date('M j, Y', strtotime($book->date_published)) }}</p>
