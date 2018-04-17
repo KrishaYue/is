@@ -1,3 +1,11 @@
+@page 
+        {
+
+            margin-left: 170px;
+        }
+
+
+
 .float-right {
 	
     margin-left: 525px;
@@ -13,4 +21,13 @@ table tr td {
 
 .form_inline {
 	display: inline;
+}
+
+.qr_div {
+	display: none;
+	margin-left: 60px;
+}
+
+.btn-print {
+	margin-left: 690px;
 }

@@ -166,4 +166,11 @@ class BookController extends Controller
         Session::flash('success', 'Book successfully changed.');
         return redirect()->route('book.edit', $book->id);
     }
+
+    public function printBooks() {
+      $books = Book::all();
+        return view('books.printall')
+                ->with('books', $books);
+    }
+
 }

@@ -19,7 +19,8 @@
             <h1>Books <small class="muted">All books in the database</small></h1>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <a href="{{ route('book.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Add Book</a>
+                    <a href="{{ route('book.create') }}" class="btn btn-success btn-sm"><i class="fas fa-plus"></i> Add Book</a>
+                    <a href="#" class="btn btn-default btn-sm btn-print"><i class="fas fa-print"></i> Print All Records</a>
                 </div>
 
                 <div class="panel-body">
@@ -103,11 +104,21 @@
                                           <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-md-offset-2">
-                                                    <img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(400)->generate($book->id.'-'.$book->created_at))}} ">
+                                                    <img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(400)->generate(url('home/book/').'/'.$book->id))}} ">
                                                 </div>
                                             </div>
                                           </div>
+
+                                          <!-- print content -->
+                                          <div class="qr_div" id="qr{{$book->id}}">
+                                                <ul class="list-inline">
+                                                    <li><h1>ID #: {{ $book->id }}</h1></li>
+                                                    <li style="margin-left: 200px;"><img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(150)->generate(url('home/book/').'/'.$book->id))}} "></li>
+                                                </ul>
+                                          </div>
+
                                           <div class="modal-footer">
+                                            <button class="btn btn-primary btn-sm" onclick="printContent('qr{{$book->id}}')"><i class="fas fa-print"></i> Print</button>
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                           </div>
                                         </div>
@@ -139,7 +150,14 @@
         function myFunc() {
             d = document.getElementById("itemsOption").value;
             window.location = "{{ $books->url(1) }}&items=" + d;
-        };        
+        };  
+
+        function printContent(el) {
+            var restorepage = document.body.innerHTML;
+            var printcontent = document.getElementById(el).innerHTML;
+            document.body.innerHTML = printcontent;
+            window.print();
+        }        
 </script>
 
 

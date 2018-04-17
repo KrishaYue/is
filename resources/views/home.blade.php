@@ -19,7 +19,8 @@
             <h1>Books <small class="muted">All books in the database</small></h1>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <a href="{{ route('book.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Add Book</a>
+                    <a href="{{ route('book.create') }}" class="btn btn-success btn-sm"><i class="fas fa-plus"></i> Add Book</a>
+                    <a href="{{ route('books.print') }}" class="btn btn-default btn-sm btn-print"><i class="fas fa-print"></i> Print All Records</a>
                 </div>
 
                 <div class="panel-body">
@@ -37,7 +38,7 @@
                                         </form>
                                     </li>
                                     <li>
-                                       records per page 
+                                       records per page  
                                     </li>               
                                     <li>
                                         <form class="form-inline float-right" action="{{ route('search.book') }}" method="GET">
@@ -66,8 +67,9 @@
                         <tbody>
                             @foreach($books  as $book)
                                   <tr>
+                                    
                                     <td>{{ $book->id }}</td>
-                                    <td>{{ $book->title }}</td>
+                                    <td>{{ $book->title }} @if(date('M j, Y') == $book->created_at->toFormattedDateString()) <span class="label label-danger">New</span> @endif</td>
                                     <td>{{ $book->author }}</td>
                                     <td>{{ date('M j, Y', strtotime($book->date_published)) }}</td>
                                     <td>@if($book->availability == 1)
@@ -96,17 +98,28 @@
                                         <div class="modal-content">
                                           <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h1 class="modal-title" id="myModalLabel">{{$book->title}}<small class="text-muted"> ID: {{ $book->id }}</small></h1>
+                                            <h1 class="modal-title" id="myModalLabel">{{$book->title}}</h1>
+                                            <p class="text-muted"> ID: {{ $book->id }}</p>
                                           </div>
-                                          <div class="modal-body">
+                                          <div class="modal-body" >
                                             <div class="row">
                                                 <div class="col-md-offset-2">
                                                     <img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(400)->generate(url('home/book/').'/'.$book->id))}} ">
                                                 </div>
                                             </div>
                                           </div>
+
+                                          <!-- print content -->
+                                          <div class="qr_div" id="qr{{$book->id}}">
+                                                <ul class="list-inline">
+                                                    <li><h1>ID #: {{ $book->id }}</h1></li>
+                                                    <li style="margin-left: 200px;"><img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(150)->generate(url('home/book/').'/'.$book->id))}} "></li>
+                                                </ul>
+                                          </div>
+                                          
                                           <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                            <button class="btn btn-primary btn-sm" onclick="printContent('qr{{$book->id}}')"><i class="fas fa-print"></i> Print</button>
+                                            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
                                           </div>
                                         </div>
                                       </div>
@@ -132,7 +145,14 @@
         function myFunc() {
             d = document.getElementById("itemsOption").value;
             window.location = "{{ $books->url(1) }}&items=" + d;
-        };        
+        };
+
+        function printContent(el) {
+            var restorepage = document.body.innerHTML;
+            var printcontent = document.getElementById(el).innerHTML;
+            document.body.innerHTML = printcontent;
+            window.print();
+        }        
 </script>
 
 

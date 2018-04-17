@@ -1,0 +1,39 @@
+body {
+	background-color: #10101078;
+}
+
+.print_loading {
+	margin-top: 300px;
+}
+
+.float-right {
+	
+    margin-left: 525px;
+}
+
+.btn-m-left {
+	margin-left: 10px;
+}
+
+table tr td {
+	text-transform: capitalize;
+}
+
+.form_inline {
+	display: inline;
+}
+
+.qr_content {
+	border-bottom: dashed; 
+	border-bottom-width: thin;
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+.print-btn {
+	margin-left: 610px;
+}
+
+#qr {
+	display: none;
+}
