@@ -14,6 +14,11 @@
       <h1>{{ $book->title }}</h1>
       <p class="lead">Author: {{ $book->author }}</p>
       <p class="lead">Date Published: {{ date('M j, Y', strtotime($book->date_published)) }}</p>
+      <p class="lead">Available: @if($book->availability == 1)
+                                        {{ 'Yes' }}
+                                        @else
+                                        {{ 'No' }}
+                                        @endif</p>
     </div>
 
     <div class="col-md-4">
