@@ -28,27 +28,26 @@
                     <div class="row">
                         <div class="container">
                             <ul class="list-inline">
-                                
-                                    <li>
-                                        <form>
-                                            <select id="itemsOption" onchange="myFunc()" class="form-control input-sm">
-                                                <option value="5" @if($items == 5) selected @endif >5</option>
-                                                <option value="10" @if($items == 10) selected @endif >10</option>
-                                                <option value="15" @if($items == 15) selected @endif >15</option>
-                                            </select>
-                                        </form>
-                                    </li>
-                                    <li>
-                                       records per page  
-                                    </li>               
-                                    <li>
-                                        <form class="form-inline float-right" action="{{ route('search.book') }}" method="GET">
-                                          <div class="form-group">
-                                            <input type="text" class="form-control input-sm" id="search" placeholder="Search" name="quary" title="Search by ID or Title">
-                                          </div>
-                                          <button type="submit" class="btn btn-default btn-sm"><i class="fas fa-search"></i></button>
-                                        </form>
-                                    </li>
+                                <li>
+                                    <form>
+                                        <select id="itemsOption" onchange="myFunc()" class="form-control input-sm">
+                                            <option value="5" @if($items == 5) selected @endif >5</option>
+                                            <option value="10" @if($items == 10) selected @endif >10</option>
+                                            <option value="15" @if($items == 15) selected @endif >15</option>
+                                        </select>
+                                    </form>
+                                </li>
+                                <li>
+                                   records per page  
+                                </li>               
+                                <li class="searh-form">
+                                    <form class="form-inline" action="{{ route('search.book') }}" method="GET">
+                                      <div class="form-group">
+                                        <input type="text" class="form-control input-sm" id="search" placeholder="Search" name="quary" title="Search by ID or Title">
+                                      </div>
+                                      <button type="submit" class="btn btn-default btn-sm"><i class="fas fa-search"></i></button>
+                                    </form>
+                                </li>
                             </ul>          
                         </div>   
                     </div>
@@ -69,8 +68,8 @@
                             @foreach($books  as $book)
                                   <tr>
                                     
-                                    <td>{{ $book->id }}</td>
-                                    <td>{{ $book->title }} @if(date('M j, Y') == $book->created_at->toFormattedDateString()) <span class="label label-danger blink_me">New !</span></span> @endif</td>
+                                    <td>{{ $book->id }}@if(date('M j, Y') == $book->created_at->toFormattedDateString()) <span class="label label-danger blink_me">New !</span></span> @endif</td>
+                                    <td>{{ $book->title }} </td>
                                     <td>{{ $book->author }}</td>
                                     <td>{{ date('M j, Y', strtotime($book->date_published)) }}</td>
                                     <td>@if($book->availability == 1)
@@ -131,15 +130,25 @@
                         </tbody>
                     </table>
                     
+                    <!-- pagination -->
                     <ul class="pagination pagination-sm">
+                        <li style="float: left;">
+                            <a href="{{ url('/home?page='.$page.'&items='.$items) }}" class="btn btn-sm btn-primary @if($isActive == $page) disabled @endif">First</a>
+                        </li>
                         @for ($i = $allBooks->count(); $i > 0; $i-=$items)
                             <li class=" 
                                        @if($isActive == $page) active @endif"  
-                                       value="{{ $page }}" ><a href="{{ url('/home?page='.$page.'&items='.$items) }}">{{ $page++ }}</a></li>
+                                       value="{{ $page }}" 
+                                       @if($page  > $isActive + 5) style="display: none;" @endif 
+                                       @if($page  < $isActive - 3 ) style="display: none;" @endif>
+                                       <a href="{{ url('/home?page='.$page.'&items='.$items) }}">{{ $page++ }}</a>
+                            </li>
                         @endfor
-                    </ul>
-
-                                      
+                        <li>
+                            <a href="{{ url('/home?page='.--$page.'&items='.$items) }}" class="btn btn-sm btn-primary @if($isActive == $page) disabled @endif">Last</a>
+                        </li>
+                    </ul>                                      
+                    <!-- pagination end -->
 
                 </div>
             </div>

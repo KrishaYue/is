@@ -18,7 +18,25 @@
 
     <!-- Font Awesome icon -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
-    
+    <style>
+
+        @media only screen and (max-width: 769px) {
+            .dropdown>.testprofile{
+                float:left;
+                margin-left: 20px;
+            }
+            .dropdown>img{
+                float:left;
+                margin-left: 20px;
+            }
+        }
+
+        @media only screen and (min-width: 770px) {
+            .dropdown>.testprofile{
+                float:right;
+            }
+        }
+</style>
 </head>
 <body>
     <div id="app">
@@ -57,15 +75,13 @@
                             <li class="{{ Request::is('login') ? 'active' : '' }}"><a href="{{ route('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
                             
                         @else
-                            <li>
+                            <li class="dropdown {{ Request::is('user*') ? 'active' : '' }}">
                                 @if(Auth::user()->image == '')
                                     <img src="{{ asset('default-profile.png') }} " width="28;" height="28" style="border-radius: 50%; margin-top: 10px;">
                                 @else
                                     <img src="{{ asset('images/' . Auth::user()->image) }} " width="28;" height="28" style="border-radius: 50%; margin-top: 10px;">
                                 @endif
-                            </li>
-                            <li class="dropdown {{ Request::is('user*') ? 'active' : '' }}">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
+                                <a href="#" class="dropdown-toggle testprofile" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre >
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 

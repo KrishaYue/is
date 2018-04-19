@@ -21,10 +21,7 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
     
 </head>
-<body onload="myFunction()" style="background-color: #222222;
-  width: 100%;
-  height: 100vh;
-  margin: 0;">
+<body onload="myFunction()" style="background-color: #222222;width: 100%;height: 100vh;margin: 0;">
 
 <div class="bookshelf_wrapper" id="loader">
   <ul class="books_list" id="loader_ul">
@@ -60,20 +57,14 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        @guest
 
-                        @else
                             <li class=""><a href="{{ route('home') }}">Home</a></li>
-                        @endguest
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class=""><a href="{{ route('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
-                            
-                        @else
+
                             <li>
                                 @if(Auth::user()->image == '')
                                     <img src="{{ asset('default-profile.png') }} " width="28;" height="28" style="border-radius: 50%; margin-top: 10px;">
@@ -102,7 +93,9 @@
                                     </li>
                                 </ul>
                             </li>
-                        @endguest
+
+
+
                     </ul>
                 </div>
             </div>
@@ -144,6 +137,7 @@
     @endforeach
 </div>
 
+</body>
 
 <script>
         function printContent(el) {
@@ -181,6 +175,11 @@
 
 		}   
 </script>
+
+
+    <script src="{{ asset('js/app.js') }}"></script>
+</html>
+
 
 
 

@@ -40,7 +40,7 @@
                                     <li>
                                        records per page 
                                     </li>               
-                                    <li>
+                                    <li class="searh-form">
                                         <form class="form-inline float-right" action="{{ route('search.book') }}" method="GET">
                                           <div class="form-group">
                                             <input type="text" class="form-control input-sm" id="search" placeholder="Search" name="quary" title="Search by ID or Title">
@@ -69,7 +69,7 @@
                         <tbody>
                             @foreach($books  as $book)
                                   <tr>
-                                    <td>{{ $book->id }}</td>
+                                    <td>{{ $book->id }}@if(date('M j, Y') == $book->created_at->toFormattedDateString()) <span class="label label-danger blink_me">New !</span></span> @endif</td>
                                     <td>{{ $book->title }} @if(date('M j, Y') == $book->created_at->toFormattedDateString()) <span class="label label-danger blink_me">New</span> @endif</td>
                                     <td>{{ $book->author }}</td>
                                     <td>{{ date('M j, Y', strtotime($book->date_published)) }}</td>
@@ -129,14 +129,23 @@
                     </table>
                     <!-- links for button page -->
                     <ul class="pagination pagination-sm">
+                        <li style="float: left;">
+                            <a href="{{ url('/home/search?quary='.$searchValue.'&page='.$page.'&items='.$items) }}" class="btn btn-sm btn-primary @if($isActive == $page) disabled @endif">First</a>
+                        </li>
                         @for ($i = $allBooks->count(); $i > 0; $i-=$items)                           
-                                <li class="@if($isActive == $page) active @endif" value="{{ $page }}"><a class="btn-xs"  href="{{ url('/home/search?quary='.$searchValue.'&page='.$page.'&items='.$items) }}">{{ $page++ }}</a></li>
+                                <li class="
+                                           @if($isActive == $page) active @endif"
+                                           value="{{ $page }}"
+                                           @if($page  > $isActive + 5) style="display: none;" @endif 
+                                           @if($page  < $isActive - 3 ) style="display: none;" @endif>
+                                           <a href="{{ url('/home/search?quary='.$searchValue.'&page='.$page.'&items='.$items) }}">{{ $page++ }}</a></li>
 
                         @endfor
+                        <li>
+                            <a href="{{ url('/home/search?quary='.$searchValue.'&page='.--$page.'&items='.$items) }}" class="btn btn-sm btn-primary @if($isActive == $page) disabled @endif">Last</a>
+                        </li>
                     </ul>
                     @endif
-
-                    
                          
                     
 
@@ -149,8 +158,8 @@
 <script>
         function myFunc() {
             d = document.getElementById("itemsOption").value;
-            window.location = "{{ $books->url(1) }}&items=" + d;
-        };  
+            window.location = "{!! url('/home/search?quary='.$searchValue.'&page='.--$page.'&items=') !!}" + d;
+        }  
 
         function printContent(el) {
             var restorepage = document.body.innerHTML;

@@ -9,63 +9,29 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/welcome.css') }}">
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
     </head>
-    <body>
-        <div class="flex-center position-ref full-height">
+    <body onload="myFunction()" style="background-color: #222222;width: 100%;height: 100vh;margin: 0;">
+        <div>
+            <h1 class="landing-h1">ICTDU</h1 >
+            <h2 class="landing-h2">INVENTORY SYSTEM</h2>
+        </div>
+        
+        <div class="bookshelf_wrapper" id="loader">
+
+              <ul class="books_list" id="loader_ul">
+                <li class="book_item first" id="loader_li1"></li>
+                <li class="book_item second" id="loader_li2"></li>
+                <li class="book_item third" id="loader_li3" ></li>
+                <li class="book_item fourth" id="loader_li4"></li>
+                <li class="book_item fifth" id="loader_li5"></li>
+                <li class="book_item sixth" id="loader_li6"></li>
+              </ul>
+          <div class="shelf" id="loader_shelf"></div>
+        </div>
+
+        <div class="flex-center position-ref full-height" id="myDiv">
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
@@ -77,21 +43,22 @@
                 </div>
             @endif
 
-            <div class="content">
-                <div class="title m-b-md">
-                    ICTDU INVENTORY
-                </div>
-                
-                <!--
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-                -->
             </div>
         </div>
     </body>
+
+    <script>
+        var myVar;
+
+        function myFunction() {
+            myVar = setTimeout(showPage, 3000);
+        }
+
+        function showPage() {
+
+          
+         
+            window.open("{{ url('/login') }}", "_self");
+        }   
+    </script>
 </html>
