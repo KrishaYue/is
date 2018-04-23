@@ -126,11 +126,11 @@
 
 <!-- print content -->
 <div id="qr">
-	@foreach($books as $book)
+	@foreach($selectedBooks as $book)
 	<div class="qr_content">
     	<ul class="list-inline">
-	        <li style="margin-left: 100px;"><h1>ID: {{ $book->id }}</h1></li>
-	        <li style="margin-left: 200px;"><img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(150)->generate(url('book/').'/'.$book->id))}} "></li>
+	        <li style="margin-left: 100px;"><h1>ID: {{ $book }}</h1></li>
+	        <li style="margin-left: 200px;"><img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(150)->generate(url('book/').'/'.$book))}} "></li>
     	</ul>	
     </div>
     
@@ -179,6 +179,7 @@
 
     <script src="{{ asset('js/app.js') }}"></script>
 </html>
+
 
 
 

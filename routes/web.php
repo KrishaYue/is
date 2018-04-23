@@ -26,8 +26,8 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
 	$this->post('/logout', 'Auth\LoginController@logout')->name('logout');
 
 	// Registration Routes...
-	$this->get('/naNljDFJvX', 'Auth\RegisterController@showRegistrationForm')->name('register');
-	$this->post('/naNljDFJvX', 'Auth\RegisterController@register');
+	//$this->get('/naNljDFJvX', 'Auth\RegisterController@showRegistrationForm')->name('register');
+	//$this->post('/naNljDFJvX', 'Auth\RegisterController@register');
 
 	// Password Reset Routes...
 	$this->get('/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
@@ -38,6 +38,7 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/home/search', 'HomeController@searchBook')->name('search.book');
 	Route::get('/book/printbooks', 'BookController@printBooks')->name('books.print');
+	Route::post('/book/printselectedbooks', 'BookController@printSelectedBooks')->name('qr.selected.print');
 	Route::resource('/book', 'BookController', ['except' => ['show']]);
 	Route::get('/book/{id}', 'PublicBookController@show')->name('book.show');
 	Route::post('/book/add', 'BookController@storeAndNew')->name('book.store.new');

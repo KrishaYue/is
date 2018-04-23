@@ -3,8 +3,7 @@
 @section('styles')
 
      <link href="{{ asset('css/home.css') }}" rel="stylesheet">
-     
-     
+          
 @endsection
 
 @section('content')
@@ -20,8 +19,40 @@
             <h1>Books <small class="muted">All books in the database</small></h1>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <a href="{{ route('book.create') }}" class="btn btn-success btn-sm"><i class="fas fa-plus"></i> Add Book</a>
-                    <a href="{{ route('books.print') }}" class="btn btn-default btn-sm btn-print"><i class="fas fa-print"></i> Print All Records</a>
+                    <ul class="list-inline">
+                        <li><a href="{{ route('book.create') }}" class="btn btn-success btn-sm"><i class="fas fa-plus"></i> Add Book</a></li>
+                            <li style="float:right;">
+                              <button class="btn btn-sm btn-default" form="qr_print_form" formaction="{{ route('qr.selected.print') }}"><i class="fas fa-print"></i> Print</button>
+                            </li>
+                            <li style="float:right;">
+                                <form id="qr_print_form" method="POST">
+                                  {{ csrf_field() }}
+                                  <div class="multiselect">
+                                    <div class="selectBox" onclick="showCheckboxes()">
+                                      <select class="form-control input-sm">
+                                        <option>Select a QR to print</option>
+                                      </select>
+                                      <div class="overSelect"></div>
+                                    </div>
+                                    <div id="checkboxes">
+                                        @foreach($allBooks as $book)
+                                          <label for="{{ 'book'.$book->id }}">
+                                            <input type="checkbox" id="{{ 'book'.$book->id }}" name="{{ $book->id }}" value="{{ $book->id }}" /> {{ $book->id.'. ' }} {{ $book->title }}
+                                          </label>
+                                        @endforeach
+                                      <!-- <label for="two">
+                                        <input type="checkbox" id="two" />Second checkbox</label>
+                                      <label for="three">
+                                        <input type="checkbox" id="three" />Third checkbox</label> -->
+                                    </div>
+                                  </div>
+                                </form>
+                        
+                                
+                        </li>
+                        <li style="float:right;"> or</li>
+                        <li style="float:right;"> <a href="{{ route('books.print') }}" class="btn btn-default btn-sm"><i class="fas fa-print"></i> Print All QR</a></li>
+                    </ul>                   
                 </div>
 
                 <div class="panel-body">
@@ -68,7 +99,7 @@
                             @foreach($books  as $book)
                                   <tr>
                                     
-                                    <td>{{ $book->id }}@if(date('M j, Y') == $book->created_at->toFormattedDateString()) <span class="label label-danger blink_me">New !</span></span> @endif</td>
+                                    <td>{{ $book->id }}@if($book->created_at >= $day30) <span class="label label-danger blink_me">New !</span></span> @endif</td>
                                     <td>{{ $book->title }} </td>
                                     <td>{{ $book->author }}</td>
                                     <td>{{ date('M j, Y', strtotime($book->date_published)) }}</td>
@@ -175,7 +206,24 @@
             $('.blink_me').fadeIn(500);
         }
 
-        setInterval(blinker, 1000);     
+        setInterval(blinker, 1000);
+        
+
+
+        //////////////////////////////////////////
+
+        var expanded = false;
+
+        function showCheckboxes() {
+          var checkboxes = document.getElementById("checkboxes");
+          if (!expanded) {
+            checkboxes.style.display = "block";
+            expanded = true;
+          } else {
+            checkboxes.style.display = "none";
+            expanded = false;
+          }
+        }     
 </script>
 
 

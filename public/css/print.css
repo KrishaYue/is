@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono');
 
 .print_loading {
 	margin-top: 300px;
@@ -26,6 +26,7 @@ table tr td {
 	border-bottom-width: thin;
 	padding-bottom: 10px;
 	padding-top: 10px;
+	font-family: 'IBM Plex Mono', monospace;
 }
 
 .print-btn {

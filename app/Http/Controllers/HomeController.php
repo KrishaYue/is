@@ -5,6 +5,7 @@ namespace ICTDUInventory\Http\Controllers;
 use Illuminate\Http\Request;
 use ICTDUInventory\Book;
 
+
 class HomeController extends Controller
 {
     /**
@@ -30,6 +31,8 @@ class HomeController extends Controller
         return view('home')->withBooks($books)->with('allBooks', $allBooks);
         http://localhost:8000/home?page=2
         */
+        $day30 = \Carbon\Carbon::today()->subDays(30);
+
         $isActive = $request->get('page', 1);
         $page = 1;
         $allBooks = Book::all();
@@ -37,20 +40,23 @@ class HomeController extends Controller
         $books = Book::orderBy('id', 'desc')->paginate($items);
         //$books = Book::paginate($items);
         //$books->withPath('custom/url');
+
         return view('home')
               ->with('books', $books)
               ->with('items', $items)
               ->with('allBooks', $allBooks)
               ->with('page', $page)
-              ->with('isActive', $isActive);
+              ->with('isActive', $isActive)
+              ->with('day30', $day30);
     }
 
     public function searchBook(Request $request)
     {
+        $day30 = \Carbon\Carbon::today()->subDays(30);
         $isActive = $request->get('page', 1);
         $page = 1;
         $allBooks = Book::where( 'id', 'LIKE', '%' . $request->quary . '%' )->orWhere( 'title', 'LIKE', '%' . $request->quary . '%' );
-        //$allBooks = Book::all();
+        $allBooks2 = Book::all();
         $items = $request->items ?? 10;
         $books = Book::where( 'id', 'LIKE', '%' . $request->quary . '%' )->orWhere( 'title', 'LIKE', '%' . $request->quary . '%' )->orderBy('id', 'desc')->paginate($items);
         $searchValue = $request->quary;
@@ -61,9 +67,11 @@ class HomeController extends Controller
               ->with('books', $books)
               ->with('items', $items)
               ->with('allBooks', $allBooks)
+              ->with('allBooks2', $allBooks2)
               ->with('page', $page)
               ->with('searchValue', $searchValue)
-              ->with('isActive', $isActive);
+              ->with('isActive', $isActive)
+              ->with('day30', $day30);
         }
         else {
             return view('books.search')
@@ -71,9 +79,11 @@ class HomeController extends Controller
               ->with('books', $books)
               ->with('items', $items)
               ->with('allBooks', $allBooks)
+              ->with('allBooks2', $allBooks2)
               ->with('page', $page)
               ->with('searchValue', $searchValue)
-              ->with('isActive', $isActive);
+              ->with('isActive', $isActive)
+              ->with('day30', $day30);
         }
         
     }

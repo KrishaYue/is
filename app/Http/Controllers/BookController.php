@@ -224,4 +224,31 @@ class BookController extends Controller
                 ->with('books', $books);
     }
 
+    public function printSelectedBooks(Request $request) {
+        //$subject = Subject::find($id);
+        $books = Book::all();
+        $qrSelectedArray = array();         
+        /*foreach ($books as $book) {             
+               $qrArray[$book->id] = $book->name. ' (' .$book->grade_level. ')';
+           
+        }
+*/
+
+       /* for ($i=0; $i < count($_REQUEST)-1 ; $i++) { 
+            $qrSelectedArray[$i] = $books[$_REQUEST[$i]]->id;
+        }*/
+        array_shift($_POST);
+        foreach ($_POST as $value) {
+          
+          //print_r($value);
+          $qrSelectedArray[] = $value;
+
+        }   
+
+        //print_r($qrSelectedArray);
+        //print_r($_POST['_token']);
+        return view('books.printselectedqr')
+                    ->with('selectedBooks',$qrSelectedArray);
+    }
+
 }
