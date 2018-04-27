@@ -60,9 +60,17 @@
                       </div>
                       <div class="form-group">
                         <label class="control-label col-sm-2" for="availability">Available:</label>
-						
+            
                           <div class="checkbox" id="available" >                        
                             <input type="checkbox" name="available" id="availability" @if($book->availability == 1) checked @endif>Yes
+                          </div>
+ 
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-sm-2" for="availability">With CD:</label>
+            
+                          <div class="checkbox" id="available" >                        
+                            <input type="checkbox" name="cd" id="availability" @if($book->with_cd == 1) checked @endif>Yes
                           </div>
  
                       </div>

@@ -57,6 +57,7 @@ class BookController extends Controller
         $book->author = $request->author;
         $book->date_published = $request->date_published;
         $book->availability = $request->has('available');
+        $book->with_cd = $request->has('cd');
         if($request->hasFile('bookpic')){
                 $image = $request->file('bookpic');
                 $filename = time() . '.' . $image->getClientOriginalExtension();
@@ -118,6 +119,7 @@ class BookController extends Controller
         $book->author = $request->author;
         $book->date_published = $request->date_published;
         $book->availability = $request->has('available');
+        $book->with_cd = $request->has('cd');
         if($request->hasFile('bookpic')){
                 $image = $request->file('bookpic');
                 $filename = $id . '.' . time() . '.' . $image->getClientOriginalExtension();
@@ -166,6 +168,7 @@ class BookController extends Controller
         $book->author = $request->author;
         $book->date_published = $request->date_published;
         $book->availability = $request->has('available');
+        $book->with_cd = $request->has('cd');
 
 
         if($request->hasFile('bookpic')){
@@ -200,6 +203,7 @@ class BookController extends Controller
         $book->author = $request->author;
         $book->date_published = $request->date_published;
         $book->availability = $request->has('available');
+        $book->with_cd = $request->has('cd');
         if($request->hasFile('bookpic')){
                 $image = $request->file('bookpic');
                 $filename = $id . '.' . time() . '.' . $image->getClientOriginalExtension();
@@ -225,6 +229,8 @@ class BookController extends Controller
     }
 
     public function printSelectedBooks(Request $request) {
+
+
         //$subject = Subject::find($id);
         $books = Book::all();
         $qrSelectedArray = array();         
@@ -232,7 +238,7 @@ class BookController extends Controller
                $qrArray[$book->id] = $book->name. ' (' .$book->grade_level. ')';
            
         }
-*/
+        */
 
        /* for ($i=0; $i < count($_REQUEST)-1 ; $i++) { 
             $qrSelectedArray[$i] = $books[$_REQUEST[$i]]->id;
@@ -243,7 +249,12 @@ class BookController extends Controller
           //print_r($value);
           $qrSelectedArray[] = $value;
 
-        }   
+        } 
+
+        if (empty($qrSelectedArray)) {
+             Session::flash('info', 'Please select a book to print.');
+             return redirect()->back();
+        }
 
         //print_r($qrSelectedArray);
         //print_r($_POST['_token']);

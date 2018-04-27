@@ -30,6 +30,10 @@ table tr td {
 	margin-left: 60px;
 }
 
+.mono_font {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
 .btn-print {
 	/* margin-left: 690px; */
 	float:right;

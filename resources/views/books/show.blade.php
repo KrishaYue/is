@@ -78,6 +78,13 @@
                                                   {{ 'No' }}
                                                   @endif
                   </dl>
+                  <dl class="dl-horizontal">
+                    <label>With CD:</label> @if($book->with_cd == 1)
+                                                  {{ 'Yes' }}
+                                                  @else
+                                                  {{ 'No' }}
+                                                  @endif
+                  </dl>
               </div>
             </div>
           </div>

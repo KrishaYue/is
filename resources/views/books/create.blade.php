@@ -70,6 +70,16 @@
                           </div>
  
                       </div> 
+
+                      <div class="form-group">
+                        <label class="control-label col-sm-2" for="cd">With Cd:</label>
+
+                          <div class="checkbox" id="available" >                        
+                            <input type="checkbox" name="cd" id="cd">Yes
+                          </div>
+ 
+                      </div> 
+
                       <div class="form-group">
                        
                         <label class="control-label col-sm-2" for="title">Book Picture:</label>

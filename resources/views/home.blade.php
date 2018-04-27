@@ -16,6 +16,12 @@
                   <strong>Success!</strong> {{ session('success') }}
                 </div>
              @endif
+             @if(session('info'))
+                <div class="alert alert-info alert-dismissible fade in">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <strong><i class="fas fa-info"></i> </strong> {{ session('info') }}
+                </div>
+             @endif
             <h1>Books <small class="muted">All books in the database</small></h1>
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -91,6 +97,7 @@
                             <th style="width:10%" >Author</th>
                             <th style="width:10%" >Published Date</th>
                             <th>Available</th>
+                            <th>With CD</th>
                             <th>QR Code</th>
                             <th style="width:25%" >Actions</th>
                           </tr>
@@ -109,16 +116,22 @@
                                         {{ 'No' }}
                                         @endif
                                     </td>
-                                    <td>
-                                        <a href="#" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal{{$book->id}}" title="Click me to view the QR"><i class="fas fa-qrcode"></i></a>
+                                    <td>@if($book->with_cd == 1)
+                                        {{ 'Yes' }}
+                                        @else
+                                        {{ 'No' }}
+                                        @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('book.show', $book->id) }}" class="btn btn-default btn-sm"><i class="fas fa-eye"></i> View</a>
+                                        <a href="#" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal{{$book->id}}" title="Click me to view the QR"><i class="fas fa-qrcode"></i></a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('book.show', $book->id) }}" class="btn btn-default btn-xs"><i class="fas fa-eye"></i> View</a>
 
-                                        <a href="{{ route('book.edit', $book->id) }}" class="btn btn-default btn-sm"><i class="fas fa-edit"></i> Edit</a>
+                                        <a href="{{ route('book.edit', $book->id) }}" class="btn btn-default btn-xs"><i class="fas fa-edit"></i> Edit</a>
                                                                                 
                                         <form  class="form_inline" method="POST" action="{{ route('book.destroy', $book->id) }}">
-                                        <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Delete</button>
+                                        <button class="btn btn-danger btn-xs"><i class="fas fa-trash-alt"></i> Delete</button>
                                         <input type="hidden" name="_token" value="{{ Session::token() }}">
                                         {{ method_field('DELETE') }}
                                         </form>
@@ -145,7 +158,7 @@
                                           <!-- print content -->
                                           <div class="qr_div" id="qr{{$book->id}}">
                                                 <ul class="list-inline">
-                                                    <li><h1>ID #: {{ $book->id }}</h1></li>
+                                                    <li><h1 class="mono_font">ID: {{ $book->id }}</h1></li>
                                                     <li style="margin-left: 200px;"><img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(150)->generate(url('book/').'/'.$book->id))}} "></li>
                                                 </ul>
                                           </div>
