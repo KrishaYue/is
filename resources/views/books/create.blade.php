@@ -49,13 +49,17 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-sm-2" for="date">Date:</label>
+                        <label class="control-label col-sm-2" for="date">Year:</label>
                         <div class="col-sm-8">
-                          
-                            <input type="date" class="form-control" id="date" name="date_published" value="{{ old('date_published') }}" required data-parsley-required-message="Date published is required" >
-                            @if ($errors->has('date_published'))
+                            <select class="form-control" name="year_published" required data-parsley-required-message="Year published is required" >
+                              @for($year = 1900; $year <= date("Y"); $year++)
+                                  <?php echo '<option value="'.$year.'" '.(($year==old('year_published'))?'selected="selected"':"").'>'.$year.'</option>'; ?>
+                              @endfor
+                            </select>
+                            
+                            @if ($errors->has('year_published'))
                                       <span class="help-block">
-                                          <strong class="err-msg">{{ $errors->first('date_published') }}</strong>
+                                          <strong class="err-msg">{{ $errors->first('year_published') }}</strong>
                                       </span>
                             @endif
                           

@@ -97,7 +97,7 @@
                             <th style="width:10%" >ID</th>
                             <th style="width:30%" >Title</th>
                             <th style="width:10%" >Author</th>
-                            <th style="width:10%" >Published Date</th>
+                            <th style="width:10%" >Year Published</th>
                             <th>Available</th>
                             <th>With CD</th>
                             <th>QR Code</th>
@@ -108,9 +108,9 @@
                             @foreach($books  as $book)
                                   <tr>
                                     <td>{{ $book->id }}@if($book->created_at >= $day30) <span class="label label-danger blink_me">New !</span></span> @endif</td>
-                                    <td>{{ $book->title }} @if(date('M j, Y') == $book->created_at->toFormattedDateString()) <span class="label label-danger blink_me">New</span> @endif</td>
+                                    <td>{{ $book->title }}</td>
                                     <td>{{ $book->author }}</td>
-                                    <td>{{ date('M j, Y', strtotime($book->date_published)) }}</td>
+                                    <td>{{ $book->year_published }}</td>
                                     <td>@if($book->availability == 1)
                                         {{ 'Yes' }}
                                         @else

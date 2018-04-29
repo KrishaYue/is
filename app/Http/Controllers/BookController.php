@@ -44,10 +44,11 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
+        $yearNow = date("Y");
         $this->validate($request, [
             'title'                   =>               'required',
             'author'                  =>               'required',
-            'date_published'          =>               'required|date|before:tomorrow',
+            'year_published'          =>               'required|integer|between:1900,'.$yearNow,
             'bookpic'                 =>               'sometimes|image'
         ]);
 
@@ -55,7 +56,7 @@ class BookController extends Controller
 
         $book->title = $request->title;
         $book->author = $request->author;
-        $book->date_published = $request->date_published;
+        $book->year_published = $request->year_published;
         $book->availability = $request->has('available');
         $book->with_cd = $request->has('cd');
         if($request->hasFile('bookpic')){
@@ -106,10 +107,11 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $yearNow = date("Y");
         $this->validate($request, [
             'title'                   =>               'required',
             'author'                  =>               'required',
-            'date_published'          =>               'required|date|before:tomorrow',
+            'year_published'          =>               'required|integer|between:1900,'.$yearNow,
             'bookpic'                 =>               'sometimes|image'       
         ]);
 
@@ -117,7 +119,7 @@ class BookController extends Controller
 
         $book->title = $request->title;
         $book->author = $request->author;
-        $book->date_published = $request->date_published;
+        $book->year_published = $request->year_published;
         $book->availability = $request->has('available');
         $book->with_cd = $request->has('cd');
         if($request->hasFile('bookpic')){
@@ -155,10 +157,11 @@ class BookController extends Controller
 
     public function storeAndNew(Request $request) 
     {
+       $yearNow = date("Y");
         $this->validate($request, [
             'title'                   =>               'required',
             'author'                  =>               'required',
-            'date_published'          =>               'required|date|before:tomorrow',
+            'year_published'          =>               'required|integer|between:1900,'.$yearNow,
             'bookpic'                 =>               'sometimes|image'
         ]);
 
@@ -166,7 +169,7 @@ class BookController extends Controller
 
         $book->title = $request->title;
         $book->author = $request->author;
-        $book->date_published = $request->date_published;
+        $book->year_published = $request->year_published;
         $book->availability = $request->has('available');
         $book->with_cd = $request->has('cd');
 
@@ -190,10 +193,11 @@ class BookController extends Controller
 
     public function updateAndView(Request $request, $id)
     {
+        $yearNow = date("Y");
         $this->validate($request, [
             'title'                   =>               'required',
             'author'                  =>               'required',
-            'date_published'          =>               'required|date|before:tomorrow',
+            'year_published'          =>               'required|integer|between:1900,'.$yearNow,
             'bookpic'                 =>               'sometimes|image'       
         ]);
 
@@ -201,7 +205,7 @@ class BookController extends Controller
 
         $book->title = $request->title;
         $book->author = $request->author;
-        $book->date_published = $request->date_published;
+        $book->year_published = $request->year_published;
         $book->availability = $request->has('available');
         $book->with_cd = $request->has('cd');
         if($request->hasFile('bookpic')){
@@ -230,23 +234,13 @@ class BookController extends Controller
 
     public function printSelectedBooks(Request $request) {
 
-
-        //$subject = Subject::find($id);
         $books = Book::all();
         $qrSelectedArray = array();         
-        /*foreach ($books as $book) {             
-               $qrArray[$book->id] = $book->name. ' (' .$book->grade_level. ')';
-           
-        }
-        */
 
-       /* for ($i=0; $i < count($_REQUEST)-1 ; $i++) { 
-            $qrSelectedArray[$i] = $books[$_REQUEST[$i]]->id;
-        }*/
         array_shift($_POST);
         foreach ($_POST as $value) {
           
-          //print_r($value);
+
           $qrSelectedArray[] = $value;
 
         } 
@@ -256,8 +250,7 @@ class BookController extends Controller
              return redirect()->back();
         }
 
-        //print_r($qrSelectedArray);
-        //print_r($_POST['_token']);
+
         return view('books.printselectedqr')
                     ->with('selectedBooks',$qrSelectedArray);
     }

@@ -95,7 +95,7 @@
                             <th style="width:10%" >ID</th>
                             <th style="width:30%" >Title</th>
                             <th style="width:10%" >Author</th>
-                            <th style="width:10%" >Published Date</th>
+                            <th style="width:10%" >Year Published</th>
                             <th>Available</th>
                             <th>With CD</th>
                             <th>QR Code</th>
@@ -109,7 +109,7 @@
                                     <td>{{ $book->id }}@if($book->created_at >= $day30) <span class="label label-danger blink_me">New !</span></span> @endif</td>
                                     <td>{{ $book->title }} </td>
                                     <td>{{ $book->author }}</td>
-                                    <td>{{ date('M j, Y', strtotime($book->date_published)) }}</td>
+                                    <td>{{ $book->year_published }}</td>
                                     <td>@if($book->availability == 1)
                                         {{ 'Yes' }}
                                         @else

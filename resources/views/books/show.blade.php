@@ -24,7 +24,7 @@
               <div class="border-left">
                 <h1 style="display: inline;">{{ $book->title }} </h1><small>@if(date('M j, Y') == $book->created_at->toFormattedDateString()) <span class="label label-danger blink_me" style="position: absolute; top: 10px;">New !</span></span> @endif</small><br>
                 <label>Author: </label> {{ $book->author }} <br>
-                <label>Date Published: </label> {{ date('M j, Y', strtotime($book->date_published)) }}
+                <label>Year Published: </label> {{ $book->year_published }}
               </div>
               
               

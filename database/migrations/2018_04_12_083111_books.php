@@ -18,7 +18,7 @@ class Books extends Migration
             //$table->string('code', 30)->primary();
             $table->string('title');
             $table->string('author');
-            $table->date('date_published');
+            $table->integer('year_published');
             $table->timestamps();
         });
     }
