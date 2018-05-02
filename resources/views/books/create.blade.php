@@ -100,8 +100,8 @@
 
                     <!-- Split button -->
                       <div class="btn-group btn-float-right">
-                        <button type="submit" class="btn btn-success" form="create_form" formaction="{{ route('book.store') }}" >Submit</button>
-                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button type="submit" class="btn btn-success btn-sm" form="create_form" formaction="{{ route('book.store') }}" ><i class="fas fa-save"></i> Submit</button>
+                        <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <span class="caret"></span>
                           <span class="sr-only">Toggle Dropdown</span>
                         </button>

@@ -10,6 +10,11 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
+            @if(session('borrow_warning'))
+                <script>
+                  alert('Book no.' + {{ session('borrow_warning') }} + ' is not available.');
+                </script>
+            @endif
             @if(session('success'))
                 <div class="alert alert-success alert-dismissible fade in">
                   <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -68,9 +73,10 @@
                                 <li>
                                     <form>
                                         <select id="itemsOption" onchange="myFunc()" class="form-control input-sm">
-                                            <option value="5" @if($items == 5) selected @endif >5</option>
                                             <option value="10" @if($items == 10) selected @endif >10</option>
-                                            <option value="15" @if($items == 15) selected @endif >15</option>
+                                            <option value="20" @if($items == 20) selected @endif >20</option>
+                                            <option value="50" @if($items == 50) selected @endif >50</option>
+                                            <option value="100" @if($items == 100) selected @endif >100</option>
                                         </select>
                                     </form>
                                 </li>
@@ -89,12 +95,12 @@
                         </div>   
                     </div>
                     
-                    <table class="table table-bordered table-striped">
+                    <table class="table table-bordered table-striped table-hover">
                         <thead>
                           <tr>
                             <th style="width:10%" >ID</th>
                             <th style="width:30%" >Title</th>
-                            <th style="width:10%" >Author</th>
+                            <th style="width:10%" >Author(s)</th>
                             <th style="width:10%" >Year Published</th>
                             <th>Available</th>
                             <th>With CD</th>
@@ -108,7 +114,7 @@
                                     
                                     <td>{{ $book->id }}@if($book->created_at >= $day30) <span class="label label-danger blink_me">New !</span></span> @endif</td>
                                     <td>{{ $book->title }} </td>
-                                    <td>{{ $book->author }}</td>
+                                    <td>{{ (strlen($book->author) >= 15) ? substr($book->author, 0, 15). '...' : $book->author }}</td>
                                     <td>{{ $book->year_published }}</td>
                                     <td>@if($book->availability == 1)
                                         {{ 'Yes' }}
@@ -127,7 +133,9 @@
                                     </td>
                                     <td>
                                         <a href="{{ route('book.show', $book->id) }}" class="btn btn-default btn-xs"><i class="fas fa-eye"></i> View</a>
-
+                                        @if($book->availability == 1)
+                                          <a href="{{ route('view.borrow.book', $book->id) }}" class="btn btn-default btn-xs"><i class="fas fa-book"></i> Borrow</a>
+                                        @endif
                                         <a href="{{ route('book.edit', $book->id) }}" class="btn btn-default btn-xs"><i class="fas fa-edit"></i> Edit</a>
                                                                                 
                                         <form  class="form_inline" method="POST" action="{{ route('book.destroy', $book->id) }}">

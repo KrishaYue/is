@@ -127,10 +127,10 @@
 <!-- print content -->
 <div id="qr">
 	@foreach($books as $book)
-	<div class="qr_content">
+	<div style="display: inline-block;font-family: 'IBM Plex Mono', monospace;">
     	<ul class="list-inline">
-	        <li style="margin-left: 100px;"><h1>ID: {{ $book->id }}</h1></li>
-	        <li style="margin-left: 200px;"><img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(150)->generate(url('book/').'/'.$book->id))}} "></li>
+	        <h1>ID: {{ $book->id }}</h1>
+	        <img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(150)->generate(url('book/').'/'.$book->id))}} ">
     	</ul>	
     </div>
     

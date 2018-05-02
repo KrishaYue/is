@@ -37,6 +37,19 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
 
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/home/search', 'HomeController@searchBook')->name('search.book');
+
+	Route::get('/book/borrow/{id}', 'BookController@viewBorrowBook')->name('view.borrow.book');
+	Route::post('/book/borrow', 'BookController@borrowBook')->name('borrow.book');
+	Route::get('/book/borrowed', 'BookController@bookBorrowed')->name('book.borrowed');
+	Route::get('/book/borrowers/search', 'BookController@searchBorrowers')->name('search.borrowers');
+
+	Route::get('/book/penalty', 'BookController@penalty')->name('book.penalty');
+
+	Route::get('/book/borrow/edit/{id}', 'BookController@editBorrowBook')->name('edit.borrow.book');
+	Route::match(['PUT', 'PATCH'], '/book/borrow/update/{id}', 'BookController@updateBorrowBook')->name('update.borrow.book');
+	Route::delete('/book/borrow/{id}', 'BookController@destroyBorrowBook')->name('destroy.borrow.book');
+	Route::get('book/borrowers', 'BookController@viewBorrowers')->name('view.borrowers');
+
 	Route::get('/book/printbooks', 'BookController@printBooks')->name('books.print');
 	Route::post('/book/printselectedbooks', 'BookController@printSelectedBooks')->name('qr.selected.print');
 	Route::resource('/book', 'BookController', ['except' => ['show']]);

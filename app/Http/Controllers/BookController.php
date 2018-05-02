@@ -8,6 +8,7 @@ use Session;
 use Image;
 use Storage;
 use Hash;
+use ICTDUInventory\Borrower;
 
 class BookController extends Controller
 {
@@ -254,5 +255,132 @@ class BookController extends Controller
         return view('books.printselectedqr')
                     ->with('selectedBooks',$qrSelectedArray);
     }
+
+    public function viewBorrowBook($id){
+        $book = Book::find($id);
+
+        if ($book->availability == 0) {
+          Session::flash('borrow_warning', $book->id);
+          return redirect()->route('home');
+        }
+        return view('books.borrow')
+            ->with('book', $book);
+    }
+
+    public function borrowBook(Request $request){
+
+        $this->validate($request, [
+            'book_id'                   =>               'required|numeric',
+            'firstname'                 =>               'required|min:3',
+            'lastname'                  =>               'required|min:3',
+            'address'                   =>               'required',
+            'contact'                   =>               'required|numeric',
+            'deadline'                  =>               'required|date|after:yesterday'
+        ]);
+
+        $borrower = New Borrower;
+        $book = Book::find($request->book_id);
+
+        $borrower->book_id = $request->book_id;
+        $borrower->firstname = $request->firstname;
+        $borrower->lastname = $request->lastname;
+        $borrower->address = $request->address;
+        $borrower->contact = $request->contact;
+        $borrower->deadline = $request->deadline;
+
+        $borrower->save();
+
+        $book->availability = 0;
+
+        $book->save();
+
+        Session::flash('isNew', $borrower->id);
+        Session::flash('success', 'Book successfully borrowed.');
+        return redirect()->route('view.borrowers');
+    }
+
+    public function viewBorrowers(){
+      $borrowers = Borrower::orderBy('created_at', 'desc')->paginate(10);;
+      return view('books.borrowers')
+          ->with('borrowers', $borrowers);
+    }
+
+    public function destroyBorrowBook($id) {
+        
+        $borrower = Borrower::find($id);
+        $book_id = $borrower->book_id;
+        $book = Book::find($book_id);
+
+        $borrower->delete();
+        $book->availability = 1;
+        $book->save();
+
+        return redirect()->back();
+
+    }
+
+    public function editBorrowBook($id) {
+        $borrower = Borrower::find($id);
+        $book = Book::find($borrower->book_id);
+
+        return view('books.edit_borrow')
+            ->with('borrower', $borrower)
+            ->with('book', $book);
+    }
+
+    public function updateBorrowBook(Request $request, $id) {
+        $this->validate($request, [
+            'book_id'                   =>               'required|numeric',
+            'firstname'                 =>               'required|min:3',
+            'lastname'                  =>               'required|min:3',
+            'address'                   =>               'required',
+            'contact'                   =>               'required|numeric',
+            'deadline'                  =>               'required|date|after:yesterday'
+        ]);
+
+        $borrower = Borrower::find($id);
+        $book = Book::find($request->book_id);
+
+        $borrower->book_id = $request->book_id;
+        $borrower->firstname = $request->firstname;
+        $borrower->lastname = $request->lastname;
+        $borrower->address = $request->address;
+        $borrower->contact = $request->contact;
+        $borrower->deadline = $request->deadline;
+
+        $borrower->save();
+
+        $book->availability = 0;
+
+        $book->save();
+
+        Session::flash('isNew', $borrower->id);
+        Session::flash('success', 'Changes successfully saved.');
+        return redirect()->route('view.borrowers');
+    }
+
+    public function bookBorrowed(){
+        $books = Book::where('availability', '=', 0)
+            ->orderBy('id', 'desc')->paginate(10);
+
+        return view('books.borrowed')
+            ->with('books', $books);
+
+    }
+
+    public function searchBorrowers(Request $request) {
+        $query = $request->quary;
+        $borrowers = Borrower::where( 'lastname', 'LIKE', '%' . $query . '%' )->orWhere( 'firstname', 'LIKE', '%' . $query . '%' )->orderBy('created_at', 'desc')->paginate(10);
+        return view('books.searchborrowers')
+            ->with('borrowers', $borrowers);
+    }
+
+    public function penalty() {
+        $borrowers = Borrower::whereDate('deadline', '<', date("Y-m-d") )->orderBy('created_at', 'desc')->paginate(10);
+        return view('books.penalty')
+            ->with('borrowers', $borrowers);
+    }
+
+
 
 }

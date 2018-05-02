@@ -68,9 +68,10 @@
                                     <li>
                                         <form>
                                             <select id="itemsOption" onchange="myFunc()" class="form-control input-sm">
-                                                <option value="5" @if($items == 5) selected @endif >5</option>
                                                 <option value="10" @if($items == 10) selected @endif >10</option>
-                                                <option value="15" @if($items == 15) selected @endif >15</option>
+                                                <option value="20" @if($items == 20) selected @endif >20</option>
+                                                <option value="50" @if($items == 50) selected @endif >50</option>
+                                                <option value="100" @if($items == 100) selected @endif >100</option>
                                             </select>
                                         </form>
                                     </li>
@@ -96,7 +97,7 @@
                           <tr>
                             <th style="width:10%" >ID</th>
                             <th style="width:30%" >Title</th>
-                            <th style="width:10%" >Author</th>
+                            <th style="width:10%" >Author(s)</th>
                             <th style="width:10%" >Year Published</th>
                             <th>Available</th>
                             <th>With CD</th>
@@ -109,7 +110,7 @@
                                   <tr>
                                     <td>{{ $book->id }}@if($book->created_at >= $day30) <span class="label label-danger blink_me">New !</span></span> @endif</td>
                                     <td>{{ $book->title }}</td>
-                                    <td>{{ $book->author }}</td>
+                                    <td>{{ (strlen($book->author) >= 15) ? substr($book->author, 0, 15). '...' : $book->author }}</td>
                                     <td>{{ $book->year_published }}</td>
                                     <td>@if($book->availability == 1)
                                         {{ 'Yes' }}
@@ -126,7 +127,9 @@
                                     <td><a href="#" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal{{$book->id}}" title="Click me to view the QR"><i class="fas fa-qrcode"></i></a></td>
                                     <td>
                                         <a href="{{ route('book.show', $book->id) }}" class="btn btn-default btn-xs"><i class="fas fa-eye"></i> View</a>
-
+                                        @if($book->availability == 1)
+                                          <a href="{{ route('view.borrow.book', $book->id) }}" class="btn btn-default btn-xs"><i class="fas fa-book"></i> Borrow</a>
+                                        @endif
                                         <a href="{{ route('book.edit', $book->id) }}" class="btn btn-default btn-xs"><i class="fas fa-edit"></i> Edit</a>
                                          
                                         <form  class="form_inline" method="POST" action="{{ route('book.destroy', $book->id) }}">
@@ -202,7 +205,7 @@
 <script>
         function myFunc() {
             d = document.getElementById("itemsOption").value;
-            window.location = "{!! url('/home/search?quary='.$searchValue.'&page='.--$page.'&items=') !!}" + d;
+            window.location = "{!! url('/home/search?quary='.$searchValue.'&page='.(1).'&items=') !!}" + d;
         }  
 
         function printContent(el) {
