@@ -68,7 +68,7 @@
                             <li class="{{ Request::is('home*') ? 'active' : '' }}"><a href="{{ route('home') }}">Home</a></li>
                             <li class="{{ Request::is('book/borrowers*') ? 'active' : '' }}"><a href="{{ route('view.borrowers') }}">Borrowers</a></li>
                             <li class="{{ Request::is('book/borrowed*') ? 'active' : '' }}"><a href="{{ route('book.borrowed') }}">Book Borrowed</a></li>
-                            <li class="{{ Request::is('book/penalty*') ? 'active' : '' }}"><a href="{{ route('book.penalty') }}">Penalty @if($penalty_num > 0) <span class="badge" style="background-color: red;">{{ $penalty_num}}</span> @endif</a></li>
+                            @if($penalty_num > 0)<li class="{{ Request::is('book/penalty*') ? 'active' : '' }}"><a href="{{ route('book.penalty') }}">Penalty  <span class="badge" style="background-color: red;">{{ $penalty_num}}</span> </a></li>@endif
                         @endguest
                     </ul>
 
