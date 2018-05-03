@@ -153,7 +153,7 @@ class BookController extends Controller
         $book->delete();
 
         Session::flash('success', 'Book has been deleted.');
-        return redirect()->route('home');
+        return redirect()->back();
     }
 
     public function storeAndNew(Request $request) 

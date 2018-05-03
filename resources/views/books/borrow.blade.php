@@ -28,7 +28,12 @@
 			<div class="panel-body">
 				<div class="row">
 					<div class="col-md-4">
-						<img class="book-pic" src="{{ asset('book-pic.jpg') }}">
+						  @if($book->image == '')
+			                  <img class="book-pic" src="{{ asset('default-book.jpg') }}">
+			              @else
+			              	  <img class="book-pic" src="{{ asset('images/' . $book->image) }}">
+			              @endif
+						
 					</div>
 					<div class="col-md-8">
 

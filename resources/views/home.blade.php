@@ -27,7 +27,7 @@
                   <strong><i class="fas fa-info"></i> </strong> {{ session('info') }}
                 </div>
              @endif
-            <h1>Books <small class="muted">All books in the database</small></h1>
+            <h1>All Books</h1>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <ul class="list-inline">
@@ -112,9 +112,9 @@
                             @foreach($books  as $book)
                                   <tr>
                                     
-                                    <td>{{ $book->id }}@if($book->created_at >= $day30) <span class="label label-danger blink_me">New !</span></span> @endif</td>
-                                    <td>{{ $book->title }} </td>
-                                    <td>{{ (strlen($book->author) >= 15) ? substr($book->author, 0, 15). '...' : $book->author }}</td>
+                                    <td>{{ $book->id }}@if(date('M j, Y') == $book->created_at->toFormattedDateString()) <span class="label label-danger blink_me">New !</span></span> @endif</td>
+                                    <td title="{{ $book->title }}">{{ $book->title }} </td>
+                                    <td title="{{ $book->author }}">{{ (strlen($book->author) >= 15) ? substr($book->author, 0, 15). '...' : $book->author }}</td>
                                     <td>{{ $book->year_published }}</td>
                                     <td>@if($book->availability == 1)
                                         {{ 'Yes' }}

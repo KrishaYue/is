@@ -22,7 +22,7 @@
           <div class="row container">
             <div class="col-md-7">
               <div class="border-left">
-                <h1 style="display: inline;">{{ $book->title }} </h1><small>@if(date('M j, Y') == $book->created_at->toFormattedDateString()) <span class="label label-danger blink_me" style="position: absolute; top: 10px;">New !</span></span> @endif</small><br>
+                <h1 style="display: inline;">{{ $book->title }} </h1><br>
                 <label>Author: </label> {{ $book->author }} <br>
                 <label>Year Published: </label> {{ $book->year_published }}
               </div>

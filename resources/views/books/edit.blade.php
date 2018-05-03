@@ -37,7 +37,7 @@
                       <div class="form-group">
                         <label class="control-label col-sm-2" for="author">Author:</label>
                         <div class="col-sm-8">
-                          <input type="text" class="form-control" id="author" placeholder="Enter author" name="author" value="{{ $book->author }}" required data-parsley-maxlength="255" data-parsley-required-message="Author is required">
+                          <input type="text" class="form-control" id="author" placeholder="Enter author" name="author" value="{{ $book->author }}" required data-parsley-maxlength="255" data-parsley-required-message="Author is required" style="text-transform: capitalize;">
                           @if ($errors->has('author'))
                                     <span class="help-block">
                                         <strong class="err-msg">{{ $errors->first('author') }}</strong>
@@ -50,7 +50,7 @@
                         <div class="col-sm-8">
                           
                             <select class="form-control" name="year_published" required data-parsley-required-message="Year published is required" >
-                              @for($year = 1900; $year <= date("Y"); $year++)
+                              @for($year = date("Y"); $year >= 1900; $year--)
                                   <?php echo '<option value="'.$year.'" '.(($year==$book->year_published)?'selected="selected"':"").'>'.$year.'</option>'; ?>
                               @endfor
                             </select>

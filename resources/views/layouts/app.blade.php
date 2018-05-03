@@ -68,7 +68,7 @@
                             <li class="{{ Request::is('home*') ? 'active' : '' }}"><a href="{{ route('home') }}">Home</a></li>
                             <li class="{{ Request::is('book/borrowers*') ? 'active' : '' }}"><a href="{{ route('view.borrowers') }}">Borrowers</a></li>
                             <li class="{{ Request::is('book/borrowed*') ? 'active' : '' }}"><a href="{{ route('book.borrowed') }}">Book Borrowed</a></li>
-                            @if($penalty_num > 0)<li class="{{ Request::is('book/penalty*') ? 'active' : '' }}"><a href="{{ route('book.penalty') }}">Penalty  <span class="badge" style="background-color: red;">{{ $penalty_num}}</span> </a></li>@endif
+                            @if($penalty_num > 0)<li class="{{ Request::is('book/penalty*') ? 'active' : '' }}"><a href="{{ route('book.penalty') }}">Penalty  <span class="badge blink_me" style="background-color: red;">{{ $penalty_num}}</span> </a></li>@endif
                         @endguest
                     </ul>
 
@@ -123,6 +123,15 @@
     <!-- jQuery library 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 -->
+
+    <script>
+         function blinker() {
+            $('.blink_me').fadeOut(500);
+            $('.blink_me').fadeIn(500);
+        }
+
+        setInterval(blinker, 1000);
+    </script>
     @yield('scripts')
 </body>
 </html>
