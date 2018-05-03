@@ -381,6 +381,10 @@ class BookController extends Controller
             ->with('borrowers', $borrowers);
     }
 
+    public function backupBooks() {
+        return view('books.backup');
+    }
+
 
 
 }

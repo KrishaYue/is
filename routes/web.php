@@ -37,6 +37,7 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
 
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/home/search', 'HomeController@searchBook')->name('search.book');
+	Route::get('/book/backup', 'BookController@backupBooks')->name('backup.book');
 
 	Route::get('/book/borrow/{id}', 'BookController@viewBorrowBook')->name('view.borrow.book');
 	Route::post('/book/borrow', 'BookController@borrowBook')->name('borrow.book');
