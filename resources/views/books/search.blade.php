@@ -27,6 +27,8 @@
                 <div class="panel-heading">
                     <ul class="list-inline">
                         <li><a href="{{ route('book.create') }}" class="btn btn-success btn-sm"><i class="fas fa-plus"></i> Add Book</a></li>
+                        <li>|</li>
+                        <li><a href="{{ route('backup.book') }}" class="btn btn-success btn-sm"><i class="fas fa-download"></i> Backup Database</a></li>
                             <li style="float:right;">
                               <button class="btn btn-sm btn-default" form="qr_print_form" formaction="{{ route('qr.selected.print') }}"><i class="fas fa-print"></i> Print</button>
                             </li>

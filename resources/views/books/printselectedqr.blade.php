@@ -125,13 +125,15 @@
 
 
 <!-- print content -->
+
+
 <div id="qr">
-	@foreach($selectedBooks as $book)
-	<div class="qr_content">
-    	<ul class="list-inline">
-	        <li style="margin-left: 100px;"><h1>ID: {{ $book }}</h1></li>
-	        <li style="margin-left: 200px;"><img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(150)->generate(url('book/').'/'.$book))}} "></li>
-    	</ul>	
+    @foreach($selectedBooks as $book)
+    <div style="display: inline-block;font-family: 'IBM Plex Mono', monospace;">
+        <ul class="list-inline">
+            <h1 style="font-size: 12px; margin-left: 5px;">ID: {{ $book }}</h1>
+            <img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(150)->generate(url('book/').'/'.$book))}} ">
+        </ul>   
     </div>
     
     @endforeach

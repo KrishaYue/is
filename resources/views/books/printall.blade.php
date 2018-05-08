@@ -129,7 +129,7 @@
 	@foreach($books as $book)
 	<div style="display: inline-block;font-family: 'IBM Plex Mono', monospace;">
     	<ul class="list-inline">
-	        <h1>ID: {{ $book->id }}</h1>
+	        <h1 style="font-size: 12px; margin-left: 5px;">ID: {{ $book->id }}</h1>
 	        <img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(150)->generate(url('book/').'/'.$book->id))}} ">
     	</ul>	
     </div>
