@@ -6,7 +6,9 @@
             margin-left: 170px;
         }
 
-
+#indextable th {
+    cursor: pointer;
+}
 
 .float-right {
 	

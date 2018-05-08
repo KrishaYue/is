@@ -97,15 +97,15 @@
                         </div>   
                     </div>
                     
-                    <table class="table table-bordered table-striped table-hover">
+                    <table class="table table-bordered table-striped table-hover" id="indextable">
                         <thead>
                           <tr>
-                            <th style="width:10%" >ID</th>
-                            <th style="width:30%" >Title</th>
-                            <th style="width:10%" >Author(s)</th>
-                            <th style="width:10%" >Year Published</th>
-                            <th>Available</th>
-                            <th>With CD</th>
+                            <th style="width:10%" onclick="location='javascript:SortTable(0,\'N\');'" >ID</th>
+                            <th style="width:30%" onclick="location='javascript:SortTable(1,\'T\');'">Title</th>
+                            <th style="width:10%" onclick="location='javascript:SortTable(2,\'T\');'">Author(s)</th>
+                            <th style="width:10%" onclick="location='javascript:SortTable(3,\'N\');'">Year Published</th>
+                            <th onclick="location='javascript:SortTable(4,\'T\');'">Available</th>
+                            <th onclick="location='javascript:SortTable(5,\'T\');'">With CD</th>
                             <th>QR Code</th>
                             <th style="width:25%" >Actions</th>
                           </tr>
@@ -140,7 +140,7 @@
                                         @endif
                                         <a href="{{ route('book.edit', $book->id) }}" class="btn btn-default btn-xs"><i class="fas fa-edit"></i> Edit</a>
                                                                                 
-                                        <form  class="form_inline" method="POST" action="{{ route('book.destroy', $book->id) }}">
+                                        <form  class="form_inline" method="POST" action="{{ route('book.destroy', $book->id) }}" onsubmit="return ConfirmDelete()">
                                         <button class="btn btn-danger btn-xs"><i class="fas fa-trash-alt"></i> Delete</button>
                                         <input type="hidden" name="_token" value="{{ Session::token() }}">
                                         {{ method_field('DELETE') }}
@@ -210,7 +210,7 @@
     </div>
 </div>
 
-
+<script src="{{ asset('js/sort.js') }}"></script>
 <script>
         function myFunc() {
             d = document.getElementById("itemsOption").value;
@@ -246,7 +246,16 @@
             checkboxes.style.display = "none";
             expanded = false;
           }
-        }     
+        }
+
+         function ConfirmDelete()
+          {
+          var x = confirm("Are you sure you want to delete?");
+          if (x)
+            return true;
+          else
+            return false;
+          }     
 </script>
 
 
