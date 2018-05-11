@@ -27,13 +27,15 @@
                   <strong><i class="fas fa-info"></i> </strong> {{ session('info') }}
                 </div>
              @endif
-            <h1>All Books</h1>
+              <h1>All Books</h1>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <ul class="list-inline">
+
                         <li><a href="{{ route('book.create') }}" class="btn btn-success btn-sm"><i class="fas fa-plus"></i> Add Book</a></li>
                         <li>|</li>
                         <li><a href="{{ route('backup.book') }}" class="btn btn-success btn-sm"><i class="fas fa-download"></i> Backup Database</a></li>
+                        <a href="#" class="btn btn-sm btn-success" onclick="printContent('all-books')">Print Books Data</a>
                             <li style="float:right;">
                               <button class="btn btn-sm btn-default" form="qr_print_form" formaction="{{ route('qr.selected.print') }}"><i class="fas fa-print"></i> Print</button>
                             </li>
@@ -168,8 +170,8 @@
                                           <!-- print content -->
                                           <div class="qr_div" id="qr{{$book->id}}">
                                                 <ul class="list-inline">
-                                                    <li><h1 class="mono_font">ID: {{ $book->id }}</h1></li>
-                                                    <li style="margin-left: 200px;"><img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(150)->generate(url('book/').'/'.$book->id))}} "></li>
+                                                    <h1 class="mono_font">ID: {{ $book->id }}</h1>
+                                                    <img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(150)->generate(url('book/').'/'.$book->id))}} ">
                                                 </ul>
                                           </div>
                                           
@@ -209,6 +211,50 @@
         </div>
     </div>
 </div>
+
+<div id="all-books">
+  <div class="container">
+    <div class="col-md-12">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Year Published</th>
+            <th>Availability</th>
+            <th>CD Availability</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($allBooks as $row)
+          <tr>
+            <td>{{ $row->id }}</td>
+            <td>{{ $row->title }}</td>
+            <td>{{ $row->author }}</td>
+            <td>{{ $row->year_published }}</td>
+            <td>@if($row->availability == 1)
+                {{ 'Yes' }}
+                @else
+                {{ 'No' }}
+                @endif
+            </td>
+            <td>@if($row->with_cd == 1)
+                {{ 'Yes' }}
+                @else
+                {{ 'No' }}
+                @endif
+            </td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
 
 <script src="{{ asset('js/sort.js') }}"></script>
 <script>

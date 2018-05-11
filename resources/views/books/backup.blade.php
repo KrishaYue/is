@@ -5,7 +5,7 @@
     $mysqlHostName      = "localhost";
     $DbName             = "is_db";
     $backup_name        = "mybackup.sql";
-    $tables             = array("books", "borrowers", "migrations", "asset_user", "password_resets", "users");
+    $tables             = array("books", "borrowers", "courses", "password_resets", "users");
 
    //or add 5th parameter(array) of specific tables:    array("mytable1","mytable2","mytable3") for multiple tables
 

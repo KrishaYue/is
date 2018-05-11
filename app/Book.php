@@ -9,4 +9,8 @@ class Book extends Model
     public function borrower(){
     	return $this->hasOne('ICTDUInventory\Borrower');
     }
+
+    public function course(){
+    	return $this->hasOne('ICTDUInventory\Course');
+    }
 }

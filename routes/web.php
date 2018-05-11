@@ -54,6 +54,7 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
 	Route::get('/book/printbooks', 'BookController@printBooks')->name('books.print');
 	Route::post('/book/printselectedbooks', 'BookController@printSelectedBooks')->name('qr.selected.print');
 	Route::resource('/book', 'BookController', ['except' => ['show']]);
+	Route::resource('/course', 'CourseController', ['except' => ['show']]);
 	Route::get('/book/{id}', 'PublicBookController@show')->name('book.show');
 	Route::post('/book/add', 'BookController@storeAndNew')->name('book.store.new');
 

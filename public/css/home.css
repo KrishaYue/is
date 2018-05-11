@@ -1,10 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono');
 
-@page 
-        {
-
-            margin-left: 170px;
-        }
 
 #indextable th {
     cursor: pointer;
@@ -34,6 +29,7 @@ table tr td {
 
 .mono_font {
   font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
 }
 
 .btn-print {
@@ -51,7 +47,9 @@ table tr td {
 
 
 
-
+#all-books {
+  display: none;
+}
 
 .multiselect {
   width: 200px;

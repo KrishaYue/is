@@ -68,6 +68,7 @@
                             <li class="{{ Request::is('home*') ? 'active' : '' }}"><a href="{{ route('home') }}">Home</a></li>
                             <li class="{{ Request::is('book/borrowers*') ? 'active' : '' }}"><a href="{{ route('view.borrowers') }}">Borrowers</a></li>
                             <li class="{{ Request::is('book/borrowed*') ? 'active' : '' }}"><a href="{{ route('book.borrowed') }}">Book Borrowed</a></li>
+                            <li class="{{ Request::is('course*') ? 'active' : '' }}"><a href="{{ route('course.index') }}">Courses</a></li>
                             @if($penalty_num > 0)<li class="{{ Request::is('book/penalty*') ? 'active' : '' }}"><a href="{{ route('book.penalty') }}">Penalty  <span class="badge blink_me" style="background-color: red;">{{ $penalty_num}}</span> </a></li>@endif
                         @endguest
                     </ul>

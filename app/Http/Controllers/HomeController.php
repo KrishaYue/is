@@ -55,6 +55,7 @@ class HomeController extends Controller
         $day30 = \Carbon\Carbon::today()->subDays(30);
         $isActive = $request->get('page', 1);
         $page = 1;
+        $all = Book::all();
         $allBooks = Book::where( 'id', 'LIKE', '%' . $request->quary . '%' )->orWhere( 'title', 'LIKE', '%' . $request->quary . '%' )->orWhere( 'author', 'LIKE', '%' . $request->quary . '%' );
         $allBooks2 = Book::all();
         $items = $request->items ?? 10;
@@ -71,6 +72,7 @@ class HomeController extends Controller
               ->with('page', $page)
               ->with('searchValue', $searchValue)
               ->with('isActive', $isActive)
+              ->with('all', $all)
               ->with('day30', $day30);
         }
         else {
@@ -83,6 +85,7 @@ class HomeController extends Controller
               ->with('page', $page)
               ->with('searchValue', $searchValue)
               ->with('isActive', $isActive)
+              ->with('all', $all)
               ->with('day30', $day30);
         }
         
