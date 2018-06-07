@@ -4,6 +4,7 @@ namespace ICTDUInventory\Http\Controllers;
 
 use Illuminate\Http\Request;
 use ICTDUInventory\Book;
+use ICTDUInventory\Course;
 
 
 class HomeController extends Controller
@@ -37,7 +38,8 @@ class HomeController extends Controller
         $page = 1;
         $allBooks = Book::all();
         $items = $request->items ?? 10;
-        $books = Book::orderBy('year_published','asc')->paginate($items);
+        $books = Book::all();
+        $courses = Course::all();
         //$books = Book::paginate($items);
         //$books->withPath('custom/url');
 
@@ -47,51 +49,8 @@ class HomeController extends Controller
               ->with('allBooks', $allBooks)
               ->with('page', $page)
               ->with('isActive', $isActive)
-              ->with('day30', $day30);
+              ->with('day30', $day30)
+              ->with('courses', $courses);
     }
-
-    public function searchBook(Request $request)
-    {
-        $day30 = \Carbon\Carbon::today()->subDays(30);
-        $isActive = $request->get('page', 1);
-        $page = 1;
-        $all = Book::all();
-        $allBooks = Book::where( 'id', 'LIKE', '%' . $request->quary . '%' )->orWhere( 'title', 'LIKE', '%' . $request->quary . '%' )->orWhere( 'author', 'LIKE', '%' . $request->quary . '%' );
-        $allBooks2 = Book::all();
-        $items = $request->items ?? 10;
-        $books = Book::where( 'id', 'LIKE', '%' . $request->quary . '%' )->orWhere( 'title', 'LIKE', '%' . $request->quary . '%' )->orWhere( 'author', 'LIKE', '%' . $request->quary . '%' )->orderBy('year_published', 'asc')->paginate($items);
-        $searchValue = $request->quary;
-        //$books = Book::paginate($items);
-        //$books->withPath('custom/url');
-        if ($allBooks->count() > 0) {
-            return view('books.search')
-              ->with('books', $books)
-              ->with('items', $items)
-              ->with('allBooks', $allBooks)
-              ->with('allBooks2', $allBooks2)
-              ->with('page', $page)
-              ->with('searchValue', $searchValue)
-              ->with('isActive', $isActive)
-              ->with('all', $all)
-              ->with('day30', $day30);
-        }
-        else {
-            return view('books.search')
-              ->with('quary_msg', $searchValue)
-              ->with('books', $books)
-              ->with('items', $items)
-              ->with('allBooks', $allBooks)
-              ->with('allBooks2', $allBooks2)
-              ->with('page', $page)
-              ->with('searchValue', $searchValue)
-              ->with('isActive', $isActive)
-              ->with('all', $all)
-              ->with('day30', $day30);
-        }
-        
-    }
-
-
-
     
 }

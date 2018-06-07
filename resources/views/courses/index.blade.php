@@ -2,6 +2,9 @@
 
 @section('styles')
 	<link rel="stylesheet" type="text/css" href="{{ asset('/css/courses.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+n
 @endsection
 
 @section('content')
@@ -16,7 +19,7 @@
 	<div class="row">
 		<div class="col-sm-7 col-sm-offset-1">
 			<h1>Courses</h1>
-			<table class="table table-hover">
+			<table class="table table-hover" id="indextable">
 			    <thead>
 			      <tr>
 			        <th>ID</th>
@@ -56,3 +59,16 @@
 </div>
 
 @endsection
+
+
+@section('scripts')
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function() {
+    $('#indextable').DataTable();
+    } );
+  </script>
+@endsection
+

@@ -20,7 +20,7 @@
             <h1>Books <small class="muted">Add book in the database</small></h1>
             <div class="panel panel-default">
                 <div class="panel-body">
-
+                  
                     <form class="form-horizontal" method="POST" id="create_form" data-parsley-validate="parsley" enctype="multipart/form-data">
                        {{ csrf_field() }}
                 
@@ -60,6 +60,24 @@
                             @if ($errors->has('year_published'))
                                       <span class="help-block">
                                           <strong class="err-msg">{{ $errors->first('year_published') }}</strong>
+                                      </span>
+                            @endif
+                          
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-sm-2" for="date">Course:</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" name="course" required data-parsley-required-message="Course is required" >
+                              @foreach($courses as $row)
+                                  <option value="{{ $row->id }}">{{ $row->name }}</option>
+                              @endforeach
+                            </select>
+                            
+                            @if ($errors->has('course'))
+                                      <span class="help-block">
+                                          <strong class="err-msg">{{ $errors->first('course') }}</strong>
                                       </span>
                             @endif
                           

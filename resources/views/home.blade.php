@@ -2,8 +2,9 @@
 
 @section('styles')
 
-     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
-          
+    <link href="{{ asset('css/home.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
 @endsection
 
 @section('content')
@@ -71,43 +72,17 @@
                 </div>
 
                 <div class="panel-body">
-                    <div class="row">
-                        <div class="container">
-                            <ul class="list-inline">
-                                <li>
-                                    <form>
-                                        <select id="itemsOption" onchange="myFunc()" class="form-control input-sm">
-                                            <option value="10" @if($items == 10) selected @endif >10</option>
-                                            <option value="20" @if($items == 20) selected @endif >20</option>
-                                            <option value="50" @if($items == 50) selected @endif >50</option>
-                                            <option value="100" @if($items == 100) selected @endif >100</option>
-                                        </select>
-                                    </form>
-                                </li>
-                                <li>
-                                   records per page  
-                                </li>               
-                                <li class="searh-form">
-                                    <form class="form-inline" action="{{ route('search.book') }}" method="GET">
-                                      <div class="form-group">
-                                        <input type="text" class="form-control input-sm" id="search" placeholder="Search" name="quary" title="Search by ID or Title">
-                                      </div>
-                                      <button type="submit" class="btn btn-default btn-sm"><i class="fas fa-search"></i></button>
-                                    </form>
-                                </li>
-                            </ul>          
-                        </div>   
-                    </div>
                     
-                    <table class="table table-bordered table-striped table-hover" id="indextable">
+                    <table class="table table-striped table-hover" id="indextable">
                         <thead>
                           <tr>
-                            <th style="width:10%" onclick="location='javascript:SortTable(0,\'N\');'" >ID</th>
-                            <th style="width:30%" onclick="location='javascript:SortTable(1,\'T\');'">Title</th>
-                            <th style="width:10%" onclick="location='javascript:SortTable(2,\'T\');'">Author(s)</th>
-                            <th style="width:10%" onclick="location='javascript:SortTable(3,\'N\');'">Year Published</th>
-                            <th onclick="location='javascript:SortTable(4,\'T\');'">Available</th>
-                            <th onclick="location='javascript:SortTable(5,\'T\');'">With CD</th>
+                            <th style="width:10%">ID</th>
+                            <th style="width:30%">Title</th>
+                            <th style="width:10%">Author(s)</th>
+                            <th style="width:10%">Year Published</th>
+                            <th>Course</th>
+                            <th>Available</th>
+                            <th>With CD</th>
                             <th>QR Code</th>
                             <th style="width:25%" >Actions</th>
                           </tr>
@@ -118,8 +93,9 @@
                                     
                                     <td>{{ $book->id }}@if(date('M j, Y') == $book->created_at->toFormattedDateString()) <span class="label label-danger blink_me">New !</span></span> @endif</td>
                                     <td title="{{ $book->title }}">{{ $book->title }} </td>
-                                    <td title="{{ $book->author }}">{{ (strlen($book->author) >= 15) ? substr($book->author, 0, 15). '...' : $book->author }}</td>
-                                    <td>{{ $book->year_published }}</td>
+                                    <td title="{{ $book->author }}">{{ (strlen($book->author) >= 30) ? substr($book->author, 0, 30). '...' : $book->author }}</td>
+                                    <td>{{ $book->year_published }}</td>    
+                                    <td>@foreach($courses as $row) @if($row->id == $book->course_id){{ $row->name }}@endif @endforeach</td>
                                     <td>@if($book->availability == 1)
                                         {{ 'Yes' }}
                                         @else
@@ -185,26 +161,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    
-                    <!-- pagination -->
-                    <ul class="pagination pagination-sm">
-                        <li style="float: left;">
-                            <a href="{{ url('/home?page='.$page.'&items='.$items) }}" class="btn btn-sm btn-primary @if($isActive == $page) disabled @endif">First</a>
-                        </li>
-                        @for ($i = $allBooks->count(); $i > 0; $i-=$items)
-                            <li class=" 
-                                       @if($isActive == $page) active @endif"  
-                                       value="{{ $page }}" 
-                                       @if($page  > $isActive + 5) style="display: none;" @endif 
-                                       @if($page  < $isActive - 3 ) style="display: none;" @endif>
-                                       <a href="{{ url('/home?page='.$page.'&items='.$items) }}">{{ $page++ }}</a>
-                            </li>
-                        @endfor
-                        <li>
-                            <a href="{{ url('/home?page='.--$page.'&items='.$items) }}" class="btn btn-sm btn-primary @if($isActive == $page) disabled @endif">Last</a>
-                        </li>
-                    </ul>                                      
-                    <!-- pagination end -->
+                  
 
                 </div>
             </div>
@@ -253,15 +210,7 @@
   </div>
 </div>
 
-
-
-
-<script src="{{ asset('js/sort.js') }}"></script>
 <script>
-        function myFunc() {
-            d = document.getElementById("itemsOption").value;
-            window.location = "{{ $books->url(1) }}&items=" + d;
-        };
 
         function printContent(el) {
             var restorepage = document.body.innerHTML;
@@ -304,7 +253,16 @@
           }     
 </script>
 
+@endsection
 
-
+@section('scripts')
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function() {
+    $('#indextable').DataTable();
+    } );
+  </script>
 @endsection
 

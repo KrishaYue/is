@@ -9,6 +9,7 @@ use Image;
 use Storage;
 use Hash;
 use ICTDUInventory\Borrower;
+use ICTDUInventory\Course;
 
 class BookController extends Controller
 {
@@ -34,7 +35,9 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('books.create');
+        $courses = Course::all();
+        return view('books.create')
+            ->with('courses', $courses);
     }
 
     /**
@@ -50,7 +53,8 @@ class BookController extends Controller
             'title'                   =>               'required',
             'author'                  =>               'required',
             'year_published'          =>               'required|integer|between:1900,'.$yearNow,
-            'bookpic'                 =>               'sometimes|image'
+            'bookpic'                 =>               'sometimes|image',
+            'course'                  =>               'required'                                   
         ]);
 
         $book = New Book;
@@ -58,6 +62,7 @@ class BookController extends Controller
         $book->title = $request->title;
         $book->author = $request->author;
         $book->year_published = $request->year_published;
+        $book->course_id = $request->course;
         $book->availability = $request->has('available');
         $book->with_cd = $request->has('cd');
         if($request->hasFile('bookpic')){
@@ -95,8 +100,10 @@ class BookController extends Controller
     public function edit($id)
     {
         $book = Book::find($id);
+        $courses = Course::all();
         return view('books.edit')
-                ->with('book', $book);
+                ->with('book', $book)
+                ->with('courses', $courses);
     }
 
     /**
@@ -121,6 +128,7 @@ class BookController extends Controller
         $book->title = $request->title;
         $book->author = $request->author;
         $book->year_published = $request->year_published;
+        $book->course_id = $request->course;
         $book->availability = $request->has('available');
         $book->with_cd = $request->has('cd');
         if($request->hasFile('bookpic')){
@@ -234,7 +242,6 @@ class BookController extends Controller
     }
 
     public function printSelectedBooks(Request $request) {
-
         $books = Book::all();
         $qrSelectedArray = array();         
 
@@ -257,6 +264,7 @@ class BookController extends Controller
     }
 
     public function viewBorrowBook($id){
+        $courses = Course::all();
         $book = Book::find($id);
 
         if ($book->availability == 0) {
@@ -264,7 +272,8 @@ class BookController extends Controller
           return redirect()->route('home');
         }
         return view('books.borrow')
-            ->with('book', $book);
+            ->with('book', $book)
+            ->with('courses', $courses);
     }
 
     public function borrowBook(Request $request){
@@ -300,7 +309,7 @@ class BookController extends Controller
     }
 
     public function viewBorrowers(){
-      $borrowers = Borrower::orderBy('created_at', 'desc')->paginate(10);;
+      $borrowers = Borrower::all();
       return view('books.borrowers')
           ->with('borrowers', $borrowers);
     }
@@ -322,10 +331,12 @@ class BookController extends Controller
     public function editBorrowBook($id) {
         $borrower = Borrower::find($id);
         $book = Book::find($borrower->book_id);
+        $courses = Course::all();
 
         return view('books.edit_borrow')
             ->with('borrower', $borrower)
-            ->with('book', $book);
+            ->with('book', $book)
+            ->with('courses', $courses);
     }
 
     public function updateBorrowBook(Request $request, $id) {
@@ -368,12 +379,7 @@ class BookController extends Controller
 
     }
 
-    public function searchBorrowers(Request $request) {
-        $query = $request->quary;
-        $borrowers = Borrower::where( 'lastname', 'LIKE', '%' . $query . '%' )->orWhere( 'firstname', 'LIKE', '%' . $query . '%' )->orderBy('created_at', 'desc')->paginate(10);
-        return view('books.searchborrowers')
-            ->with('borrowers', $borrowers);
-    }
+
 
     public function penalty() {
         $borrowers = Borrower::whereDate('deadline', '<', date("Y-m-d") )->orderBy('created_at', 'desc')->paginate(10);

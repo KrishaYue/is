@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+@endsection
+
 @section('content')
 
 <div class="container">
@@ -14,15 +19,10 @@
 			<div class="col-md-6" style="font-size: 20px;">
 				All Borrowers
 			</div>
-			<div class="col-md-6">
-				<form id="search_form" method="GET" action="{{ route('search.borrowers') }}">
-					<input type="text" name="quary" class="form-control input-sm pull-right" style="width: 200px;" placeholder="Search">
-					<button class="btn btn-sm btn-primary pull-right"><i class="fas fa-search"></i></button>
-				</form>
-			</div>
+			
 		</div>
 		<hr>
-		<table class="table table-hover table-striped">
+		<table class="table table-hover table-striped" id="indextable">
 			<thead>
 				<tr>
 					<th style="width:30%; ">Book</th>
@@ -56,8 +56,19 @@
 				@endforeach
 			</tbody>
 		</table>
-		{{ $borrowers->links() }}
+
 	</div>
 </div>
 
+@endsection
+
+@section('scripts')
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function() {
+    $('#indextable').DataTable();
+    } );
+  </script>
 @endsection

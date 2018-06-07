@@ -24,7 +24,8 @@
               <div class="border-left">
                 <h1 style="display: inline;">{{ $book->title }} </h1><br>
                 <label>Author: </label> {{ $book->author }} <br>
-                <label>Year Published: </label> {{ $book->year_published }}
+                <label>Year Published: </label> {{ $book->year_published }} <br>
+                <label>Course: </label> @foreach($courses as $row) @if($row->id == $book->course_id) {{ $row->name }} @endif @endforeach
               </div>
               
               

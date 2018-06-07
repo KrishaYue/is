@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>ICTDU Inventory</title>
+    <title>Inventory</title>
 
     <link rel="shortcut icon" href="{{ asset('sample.ico') }}" />
     
@@ -54,7 +54,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        ICTDU Inventory
+                        Inventory
                     </a>
                 </div>
 

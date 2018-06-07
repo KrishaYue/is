@@ -62,6 +62,25 @@
                           
                         </div>
                       </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-sm-2" for="date">Year:</label>
+                        <div class="col-sm-8">
+                          
+                            <select class="form-control" name="course" required data-parsley-required-message="Year published is required" >
+                              @foreach($courses as $row)
+                                  <option value="{{ $row->id }}" @if($row->id == $book->course_id) selected @endif>{{ $row->name }}</option>
+                              @endforeach
+                            </select>
+                            @if ($errors->has('course'))
+                                      <span class="help-block">
+                                          <strong class="err-msg">{{ $errors->first('course') }}</strong>
+                                      </span>
+                            @endif
+                          
+                        </div>
+                      </div>
+
                       <div class="form-group">
                         <label class="control-label col-sm-2" for="availability">Available:</label>
             

@@ -10,7 +10,7 @@ class Book extends Model
     	return $this->hasOne('ICTDUInventory\Borrower');
     }
 
-    public function course(){
-    	return $this->hasOne('ICTDUInventory\Course');
+    public function courses(){
+    	return $this->hasMany('ICTDUInventory\Course');
     }
 }

@@ -47,6 +47,9 @@
 									<div class="book-year">
 										<p><strong class="small">Year Published: </strong>{{ $book->year_published }}</p>
 									</div>
+									<div class="book-year">
+										<p><strong class="small">Course: </strong>@foreach($courses as $row) @if($row->id == $book->course_id) {{ $row->name }} @endif @endforeach</p>
+									</div>
 									<div class="book-qr">
 										<img src="data:image/png;base64, {{base64_encode(QrCode::format('png')->size(100)->generate(url('book/').'/'.$book->id))}} ">
 									</div>
